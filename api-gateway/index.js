@@ -1,10 +1,15 @@
 import { config } from "dotenv";
 import express from "express";
 import httpProxy from "http-proxy";
+import { authenticate } from "./middlewares/authenticate.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 config();
 
 const apiGateway = express();
+apiGateway.use(cookieParser());
+apiGateway.use(cors());
 const proxy = httpProxy.createProxyServer();
 
 const colors = {
@@ -20,14 +25,14 @@ const consoleLog = (message, color) => {
     console.log(`${color}${message}${colors.reset}`);
 };
 
-// apiGateway.use('/api/*', (req, res, next) => {
-//     const { authorization } = req.headers;
-//     if (!authorization || !authorization.startsWith('Bearer ')) {
-//         return res.status(401).json({ message: 'Unauthorized' });
-//     }
-//     next();
-// });
+apiGateway.use('/api/auth', (req, res) => {
+    consoleLog(`Request sent to auth server from gateway`, colors.green);
+    proxy.web(req, res, { target: process.env.AUTH_API });
+});
 
+apiGateway.use('/api/*', (req, res, next) => {
+    authenticate(req, res, next);
+});
 
 proxy.on('error', (error, req, res) => {
     console.error('Proxy Error:', error);
@@ -53,7 +58,3 @@ apiGateway.use('/api/learner', (req, res) => {
     proxy.web(req, res, { target: process.env.LEARNER_API });
 }); 
 
-apiGateway.use('/api/auth', (req, res) => {
-    consoleLog(`Request sent to auth server from gateway`, colors.green);
-    proxy.web(req, res, { target: process.env.AUTH_API });
-});
