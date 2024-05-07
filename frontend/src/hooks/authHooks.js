@@ -11,9 +11,7 @@ export const useLogin = () => {
         {
             onSuccess: (data) => {
                 localStorage.setItem('userRole', data?.role);
-                if (data.role === 'admin') {
-                    window.location.href = '/home';
-                }
+                window.location.href = '/home';
             },
             onError: (error) => {
                 message.error(error.response.data.message);
