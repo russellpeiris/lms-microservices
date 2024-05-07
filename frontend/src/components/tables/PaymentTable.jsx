@@ -1,27 +1,27 @@
-import React from "react";
-import { Table, Button } from "antd";
+import React from 'react';
+import { Table, Button } from 'antd';
 
 const columns = [
     {
-        title: "Course Code",
-        dataIndex: "courseCode",
-        key: "courseCode",
-        width: "10%"
+        title: 'Course Code',
+        dataIndex: 'courseCode',
+        key: 'courseCode',
+        width: '10%',
     },
     {
-        title: "Payment ID",
-        dataIndex: "paymentId",
-        key: "paymentId",
+        title: 'Payment ID',
+        dataIndex: 'paymentId',
+        key: 'paymentId',
     },
     {
-        title: "Amount",
-        dataIndex: "amount",
-        key: "amount",
+        title: 'Amount',
+        dataIndex: 'amount',
+        key: 'amount',
     },
     {
-        title: "Action",
-        dataIndex: "",
-        key: "action",
+        title: 'Action',
+        dataIndex: '',
+        key: 'action',
         render: (record) => (
             <Button type="primary" size="small">
                 View
@@ -32,22 +32,20 @@ const columns = [
 
 const dataSource = [
     {
-        courseCode: "CSC101",
-        paymentId: "PAY-12345",
-        amount: 100.00,
+        courseCode: 'CSC101',
+        paymentId: 'PAY-12345',
+        amount: 100.0,
     },
     {
-        courseCode: "MATH202",
-        paymentId: "PAY-67890",
-        amount: 150.50,
+        courseCode: 'MATH202',
+        paymentId: 'PAY-67890',
+        amount: 150.5,
     },
     // Add more payment data objects here
 ];
 
 const PaymentTable = () => {
-    return (
-        <Table dataSource={dataSource} columns={columns} bordered pagination={false} />
-    );
+    return <Table dataSource={dataSource} columns={columns} bordered pagination={false} />;
 };
 
 export default PaymentTable;
