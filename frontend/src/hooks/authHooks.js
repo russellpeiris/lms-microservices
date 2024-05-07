@@ -10,9 +10,9 @@ export const useLogin = () => {
         },
         {
             onSuccess: (data) => {
-                localStorage.setItem('token', data?.role);
+                localStorage.setItem('userRole', data?.role);
                 if (data.role === 'admin') {
-                    window.location.href = '/admin';
+                    window.location.href = '/home';
                 }
             },
             onError: (error) => {
