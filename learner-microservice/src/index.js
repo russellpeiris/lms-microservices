@@ -9,7 +9,10 @@ config();
 export const learnerService = express();
 
 learnerService.use(cookieParser());
-learnerService.use(cors());
+learnerService.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 learnerService.use(express.json());
 

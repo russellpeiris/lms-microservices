@@ -9,7 +9,10 @@ config();
 export const paymentService = express();
 
 paymentService.use(cookieParser());
-paymentService.use(cors());
+paymentService.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 paymentService.use(express.json());
 

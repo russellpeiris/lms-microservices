@@ -1,15 +1,19 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
 import httpProxy from "http-proxy";
 import { authenticate } from "./middlewares/auth.js";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+
 
 config();
 
 const apiGateway = express();
 apiGateway.use(cookieParser());
-apiGateway.use(cors());
+apiGateway.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 const proxy = httpProxy.createProxyServer();
 
 const colors = {
@@ -31,6 +35,7 @@ apiGateway.use('/api/auth', (req, res) => {
 });
 
 apiGateway.use('/api/*', (req, res, next) => {
+console.log('req :', req);
     authenticate(req, res, next);
 });
 
