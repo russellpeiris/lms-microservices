@@ -5,6 +5,7 @@ import PaymentTable from '../../components/tables/PaymentTable';
 import ApprovalTable from '../../components/tables/ApprovalTable';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import CourseModal from '../../components/instructor/CourseModal';
 
 const Home = () => {
     const userRole = localStorage.getItem('userRole');
@@ -19,7 +20,10 @@ const Home = () => {
                     </>
                 );
             case 'instructor':
-                return <InstructorTable />;
+                return <>
+                    <CourseModal />
+                    <InstructorTable />
+                </>;
             case 'learner':
                 return <LearnerTable />;
             default:
