@@ -1,6 +1,6 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Form, Input, Typography } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLogin } from '../../hooks/authHooks';
 
 const Login = () => {
@@ -10,6 +10,10 @@ const Login = () => {
         login(values);
     };
 
+    useEffect(() => {
+        localStorage.clear();
+    }, []);
+    
     return (
         <Flex justify="center" align="center" style={{ height: '100vh' }}>
             <Form layout="vertical" onFinish={onFinish}>

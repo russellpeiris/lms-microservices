@@ -8,8 +8,12 @@ config();
 
 export const courseService = express();
 
-courseService.use(cookieParser());
-courseService.use(cors());
+courseService.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 courseService.use(express.json());
 
@@ -26,7 +30,7 @@ connectDB()
     console.log(error.message);
   });
 
-courseService.get("/", (req, res) => {
+courseService.post("/", (req, res) => {
   console.log(`Received request to course server from gateway`);
   res.status(200).send("Response from course server");
 });

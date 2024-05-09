@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+
+  api_gateway:
+    build: ./api-gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth_microservice
+    networks:
+      - app_network
+    env_file:
+      - ./api-gateway/.env
+
+  auth_microservice:
+    build: ./authentication-microservice
+    ports:
+      - "4001:4001"
+    networks:
+      - app_network
+    env_file:
+      - ./authentication-microservice/.env
+
+networks:
+  app_network:
+    driver: bridge
