@@ -5,9 +5,7 @@ const Schema = mongoose.Schema;
 //defining the learner progress schema
 const learnerProgressSchema = new Schema({
   course: {
-    type: Schema.Types.ObjectId,
-    ref: "Course",
-    required: true,
+    type: String,
   },
   completedLectures: [
     {
@@ -31,24 +29,26 @@ const learnerProgressSchema = new Schema({
 });
 
 //defining the schema for the learner
-const learnerSchema = new Schema({
-  userName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  enrolledCourses: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Course",
+const learnerSchema = new Schema(
+  {
+    learnerId: {
+      type: String,
+      required: true,
     },
-  ],
-  progress: [learnerProgressSchema],
-});
+    userName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    enrolledCourses: [String],
+    progress: [learnerProgressSchema],
+  },
+  { timestamps: true }
+);
 
 const Learner = mongoose.model("Learner", learnerSchema);
 

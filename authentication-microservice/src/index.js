@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import express from "express";
 import { connectDB } from "../configs/DBConnect.js";
-import { login, register } from "./controllers/auth.controller.js";
+import { getUserById, login, register } from "./controllers/auth.controller.js";
 
 config();
 
@@ -28,3 +28,4 @@ authService.post("/test", (req, res) => {
 
 authService.post("/login", login);
 authService.post("/register", register);
+authService.get("/user/:userId", getUserById);
