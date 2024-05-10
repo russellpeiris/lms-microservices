@@ -3,7 +3,6 @@ import express from "express";
 import { connectDB } from "../configs/DBConnect.js";
 import { login, register } from "./controllers/auth.controller.js";
 
-
 config();
 
 export const authService = express();
@@ -27,5 +26,5 @@ authService.post("/test", (req, res) => {
   res.status(200).send("Response from auth server");
 });
 
-authService.post("/login", login)
-authService.post("/register", register)
+authService.post("/login", login);
+authService.post("/register", register);

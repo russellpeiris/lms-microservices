@@ -21,23 +21,16 @@ const getCourses = async (req, res) => {
   }
 };
 
-const addLearner = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
-    //checking if the currently logged in user is a learner, if so add that user as a learner
-    const user_role = req.user.role;
-
-    if (user_role == "learner") {
-      let learnerData = {
-        userName: "",
-        email: "",
-        enrolledCourses: [],
-        progress: [],
-      };
-    } else {
-      res.status(403);
-      throw new Error("User is not a learner");
-    }
-  } catch (e) {}
+    //get the course microsrvice
+    const userId = req.userId;
+    console.log("UserId: ", userId);
+    return res.status(200).json({ userId });
+  } catch (error) {
+    console.error("Error getting userId");
+    return res.status(500).json({ error: "Error getting userId" });
+  }
 };
 
-export { getCourses };
+export { getCourses, getCurrentUser };
