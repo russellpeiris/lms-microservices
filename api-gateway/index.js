@@ -35,7 +35,6 @@ apiGateway.use('/api/auth', (req, res) => {
 });
 
 apiGateway.use('/api/*', (req, res, next) => {
-console.log('req :', req);
     authenticate(req, res, next);
 });
 
