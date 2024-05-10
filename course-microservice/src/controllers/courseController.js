@@ -42,7 +42,7 @@ const getCourse = async (req, res) => {
 //Create a new Course
 const createCourse = async (req, res) => {
   try {
-    const { courseCode, name, lectureContent } = req.body;
+    const { courseCode, name, courseContent } = req.body;
 
     if (!courseCode || !name) {
       return res.status(400).json({
@@ -53,7 +53,7 @@ const createCourse = async (req, res) => {
     const newCourse = new Course({
       courseCode,
       name,
-      lectureContent: lectureContent || [],
+      courseContent: courseContent || [],
     });
 
     await newCourse.save();
@@ -139,6 +139,61 @@ const approveCourse = async (req, res) => {
   }
 };
 
+//Check if Two Courses overlap in time
+const checkClash = async (req, res) => {
+  try {
+    const { courseContent } = req.body;
+
+    if (!courseContent || !Array.isArray(courseContent)) {
+      return res.status(400).json({
+        error: "Course content should be an array.",
+      });
+    }
+
+    // Iterate over lecs to check for clashes
+    for (const lecture of courseContent) {
+      const { day, startTime, endTime } = lecture;
+
+      const existingCourse = await Course.findOne({
+        "courseContent.day": day,
+        $or: [
+          {
+            "courseContent.startTime": { $lte: startTime },
+            "courseContent.endTime": { $gte: startTime },
+          },
+          {
+            "courseContent.startTime": { $lte: endTime },
+            "courseContent.endTime": { $gte: endTime },
+          },
+          {
+            "courseContent.startTime": { $gte: startTime },
+            "courseContent.endTime": { $lte: endTime },
+          },
+        ],
+      });
+
+      if (existingCourse) {
+        // If a clash is found, return the conflicting course
+        return res.status(400).json({
+          clash: true,
+          existingCourse,
+          message: "There is a clash with an existing course's schedule.",
+        });
+      }
+    }
+
+    // If no clashes are found,
+    return res.status(200).json({
+      clash: false,
+      message: "No schedule clashes found.",
+    });
+  } catch (error) {
+    console.error("Error checking course clash:", error);
+    return res.status(500).json({
+      error: "An error occurred while checking for clashes.",
+    });
+  }
+};
 export {
   createCourse,
   updateCourse,
@@ -146,4 +201,5 @@ export {
   getCourses,
   getCourse,
   approveCourse,
+  checkClash,
 };

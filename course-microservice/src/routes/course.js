@@ -7,6 +7,7 @@ import {
   getCourses,
   getCourse,
   approveCourse,
+  checkClash,
 } from "../controllers/courseController.js";
 
 //create a router
@@ -29,6 +30,9 @@ router.delete("/:id", deleteCourse);
 
 //Approve a course
 router.patch("/approve/:id", approveCourse);
+
+//Check if the lectures clash
+router.post("/clash", checkClash);
 
 //export the router
 export { router };

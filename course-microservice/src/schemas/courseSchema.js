@@ -19,6 +19,15 @@ const lectureContentSchema = new Schema({
     type: String,
     default: "No quiz yet",
   },
+  day: {
+    type: String,
+  },
+  startTime: {
+    type: String,
+  },
+  endTime: {
+    type: String,
+  },
 });
 
 const courseSchema = new Schema(
@@ -32,7 +41,7 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
-    lectureContent: [lectureContentSchema],
+    courseContent: [lectureContentSchema],
     approval: {
       type: Boolean,
       default: false,
