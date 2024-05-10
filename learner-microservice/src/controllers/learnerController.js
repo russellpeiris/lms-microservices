@@ -1,5 +1,6 @@
 import Learner from "../schema/learnerSchema.js";
 import axios from "axios";
+import sendEmail from "../utils/emailUtils.js";
 
 //Get Course list from the course Microservice
 const COURSE_MICRO_SERVICE_BASE_URL = "http://localhost:4003";
@@ -90,6 +91,10 @@ const learnerEnroltoCourses = async (req, res) => {
     );
     const enrolledCourse = enrolledCourseResponse.data;
 
+    //send email if enrolment is success
+    const emailContent = `Dear ${learner.userName},\n\n You have succesfully enrolled to the course ${courseCode}. \n\n Please check your updated profile!\n\n -Learner Manager-`;
+    await sendEmail(learner.email, "New Course Enrolment", emailContent);
+
     return res
       .status(200)
       .json({ message: "Successfully Enrolled to Course", enrolledCourse });
@@ -126,6 +131,9 @@ const learnerUnenrolFromCourse = async (req, res) => {
     const updatedLearner = await Learner.findOne({
       learnerId: req.headers.userid,
     });
+
+    const emailContent = `Dear ${updatedLearner.userName},\n\n This is to infrom that you have un enrolled from the course ${courseCode}. \n\n Please enrol again if you need to acess course content\n\n -Learner Manager-`;
+    await sendEmail(updatedLearner.email, "Course Un-Enrolment", emailContent);
 
     return res.status(200).json({
       message: "Successfully Unenrolled from Course",
