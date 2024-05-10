@@ -1,53 +1,54 @@
 import { Button, Table } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGetCourses } from '../../hooks/courseHooks';
 
-const columns = [
-    {
-        title: 'Course Code',
-        dataIndex: 'courseCode',
-        key: 'courseCode',
-        width: '10%',
-    },
-    {
-        title: 'Course Name',
-        dataIndex: 'courseName',
-        key: 'courseName',
-        width: '30%',
-    },
-    {
-        title: 'Action',
-        dataIndex: '',
-        key: 'action',
-        render: (record) => (
-            <div>
-                <Button type="primary" size="small">
-                    View
-                </Button>
-                <Button type="primary" size="small" style={{ marginLeft: 8 }}>
-                    Edit
-                </Button>
-                <Button danger type="primary" size="small" style={{ marginLeft: 8 }}>
-                    Delete
-                </Button>
-            </div>
-        ),
-    },
-];
-
-const dataSource = [
-    {
-        courseCode: 'CSC101',
-        courseName: 'Introduction to Computer Science',
-    },
-    {
-        courseCode: 'MATH202',
-        courseName: 'Calculus II',
-    },
-    // Add more course data objects here
-];
 
 const InstructorTable = () => {
-    return <Table dataSource={dataSource} columns={columns} bordered pagination={false} />;
+
+    const columns = [
+        {
+            title: 'Course Code',
+            dataIndex: 'courseCode',
+            key: 'courseCode',
+            width: '10%',
+        },
+        {
+            title: 'Course Name',
+            dataIndex: 'courseName',
+            key: 'courseName',
+            width: '30%',
+        },
+        {
+            title: 'Action',
+            dataIndex: '',
+            key: 'action',
+            render: (record) => (
+                <div>
+                    <Button type="primary" size="small">
+                        View
+                    </Button>
+                    <Button type="primary" size="small" style={{ marginLeft: 8 }}>
+                        Edit
+                    </Button>
+                    <Button danger type="primary" size="small" style={{ marginLeft: 8 }}>
+                        Delete
+                    </Button>
+                </div>
+            ),
+        },
+    ];
+
+
+    const { data, isLoading } = useGetCourses();
+    const [courses, setCourses] = useState([]);
+    useEffect(() => {
+        if (data) {
+            const pendingCourses = data.filter((course) => course.approval === 'pending');
+            setCourses(pendingCourses);
+        }
+    }, [data]);
+
+    return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
 };
 
 export default InstructorTable;

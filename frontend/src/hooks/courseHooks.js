@@ -6,11 +6,13 @@ export const useGetCourses = () => {
     return useQuery(
         'courses',
         async () => {
-            const response = await http.get('/course');
+            const response = await http.get('/course',{
+                withCredentials: 'include',
+            });
             return response.data;
         },
         {
-            refetchOnWindowFocus: false,
+            refetchOnWindowFocus: true,
             onError: (error) => {
                 message.error(error.response.data.message);
             },
