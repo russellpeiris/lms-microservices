@@ -4,9 +4,7 @@ import Course from "../schemas/courseSchema.js";
 const getCourses = async (req, res) => {
   try {
     const courses = await Course.find();
-    return res.status(200).json({
-      courses,
-    });
+    return res.status(200).json(courses);
   } catch (error) {
     console.error("Faced an error retrieving courses:", error);
     return res.status(500).json({
