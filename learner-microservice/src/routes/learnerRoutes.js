@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addCourseProgress,
   addLearner,
   getCourses,
   getCurrentLearner,
@@ -15,5 +16,7 @@ router.get("/user", getCurrentLearner);
 router.post("/", addLearner);
 router.patch("/enrol", learnerEnroltoCourses);
 router.patch("/unenrol/:courseCode", learnerUnenrolFromCourse);
+router.patch("/progress/:courseCode", addCourseProgress);
+router.patch("/updateProgress/:courseCode", addCourseProgress);
 
 export { router };
