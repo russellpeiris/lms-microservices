@@ -3,6 +3,7 @@ import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
 import { connectDB } from "../configs/DBConnect.js";
+import { router } from "../src/routes/course.js";
 
 config();
 
@@ -19,6 +20,8 @@ courseService.use(express.json());
 
 const port = process.env.COURSE_PORT;
 
+courseService.use("/", router);
+
 // Start the server after connecting to the database
 connectDB()
   .then(() => {
@@ -30,7 +33,7 @@ connectDB()
     console.log(error.message);
   });
 
-courseService.post("/", (req, res) => {
-  console.log(`Received request to course server from gateway`);
-  res.status(200).send("Response from course server");
-});
+// courseService.post("/", (req, res) => {
+//   console.log(`Received request to course server from gateway`);
+//   res.status(200).send("Response from course server");
+// });
