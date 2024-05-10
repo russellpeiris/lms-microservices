@@ -6,7 +6,9 @@ export const useGetCourses = () => {
     return useQuery(
         'courses',
         async () => {
-            const response = await http.get('/course');
+            const response = await http.get('/course',{
+                withCredentials: 'include',
+            });
             return response.data;
         },
         {
