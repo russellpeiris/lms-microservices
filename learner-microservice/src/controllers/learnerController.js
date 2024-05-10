@@ -63,4 +63,79 @@ const getCurrentLearner = async (req, res) => {
   }
 };
 
-export { getCourses, getCurrentLearner, addLearner };
+const learnerEnroltoCourses = async (req, res) => {
+  try {
+    const { courseCode } = req.body;
+    const learner = await Learner.findOne({ learnerId: req.headers.userid });
+
+    if (!learner) {
+      res.status(404).json({ message: " Learner not found" });
+      return;
+    }
+
+    if (!learner.enrolledCourses.includes(courseCode)) {
+      learner.enrolledCourses.push(courseCode);
+    }
+
+    await learner.save();
+
+    // Fetch the enrolled course data
+    const enrolledCourseResponse = await axios.get(
+      `${COURSE_MICRO_SERVICE_BASE_URL}/courseCode/${courseCode}`
+    );
+    const enrolledCourse = enrolledCourseResponse.data;
+
+    return res
+      .status(200)
+      .json({ message: "Successfully Enrolled to Course", enrolledCourse });
+  } catch (error) {
+    console.error("Error enrolling to course");
+    return res.status(500).json({ error: "Error enroling to course" });
+  }
+};
+
+const learnerUnenrolFromCourse = async (req, res) => {
+  try {
+    const { courseCode } = req.params;
+    const learner = await Learner.findOne({ learnerId: req.headers.userid });
+
+    if (!learner) {
+      return res.status(404).json({ message: "Learner not found" });
+    }
+
+    if (!learner.enrolledCourses.includes(courseCode)) {
+      return res
+        .status(400)
+        .json({ message: "Learner is not enrolled in this course" });
+    }
+
+    // Remove the courseCode from the enrolledCourses array
+    learner.enrolledCourses = learner.enrolledCourses.filter(
+      (code) => code !== courseCode
+    );
+
+    // Save the updated learner
+    await learner.save();
+
+    // to provide confirmation that the unenrollment was successful
+    const updatedLearner = await Learner.findOne({
+      learnerId: req.headers.userid,
+    });
+
+    return res.status(200).json({
+      message: "Successfully Unenrolled from Course",
+      learner: updatedLearner,
+    });
+  } catch (error) {
+    console.error("Error unenrolling from course:", error);
+    return res.status(500).json({ error: "Error unenrolling from course" });
+  }
+};
+
+export {
+  getCourses,
+  getCurrentLearner,
+  addLearner,
+  learnerEnroltoCourses,
+  learnerUnenrolFromCourse,
+};
