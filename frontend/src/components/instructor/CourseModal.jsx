@@ -72,7 +72,7 @@ const CourseModal = ( {isEdit} ) => {
                             >
                                 <Input placeholder="Enter course name" />
                             </Form.Item>
-                            <Form.List name="lectureContent">
+                            <Form.List name="courseContent">
                                 {(fields, { add, remove }) => (
                                     <>
                                         {fields.map(({ key, name, fieldKey, ...restField }) => (
