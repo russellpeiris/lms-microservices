@@ -7,6 +7,7 @@ import {
   getCourses,
   getCourse,
   approveCourse,
+  getCourseByCourseCode,
 } from "../controllers/courseController.js";
 
 //create a router
@@ -29,6 +30,9 @@ router.delete("/:id", deleteCourse);
 
 //Approve a course
 router.patch("/approve/:id", approveCourse);
+
+//Approve a course
+router.get("/courseCode/:courseCode", getCourseByCourseCode);
 
 //export the router
 export { router };

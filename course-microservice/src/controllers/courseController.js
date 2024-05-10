@@ -139,6 +139,26 @@ const approveCourse = async (req, res) => {
   }
 };
 
+//method to get course by course code (to display once enrolled by learner)
+const getCourseByCourseCode = async (req, res) => {
+  try {
+    const { courseCode } = req.params;
+    const course = await Course.findOne({ courseCode: courseCode });
+
+    if (!course) {
+      res.status(404).json({ message: " Course not found" });
+      return;
+    }
+
+    res.status(200).json({ course });
+  } catch (error) {
+    console.error("Error getting course by Course code");
+    return res
+      .status(500)
+      .json({ error: "Error getting course by course code" });
+  }
+};
+
 export {
   createCourse,
   updateCourse,
@@ -146,4 +166,5 @@ export {
   getCourses,
   getCourse,
   approveCourse,
+  getCourseByCourseCode,
 };
