@@ -117,9 +117,10 @@ const deleteCourse = async (req, res) => {
 const approveCourse = async (req, res) => {
   try {
     const { id } = req.params;
+    const { approval } = req.body;
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
-      { approved: true },
+      { approval },
       { new: true }
     );
 
@@ -128,7 +129,7 @@ const approveCourse = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: "Course approved successfully",
+      message: approval === "true" ? "Course approved" : "Course declined",
       course: updatedCourse,
     });
   } catch (error) {

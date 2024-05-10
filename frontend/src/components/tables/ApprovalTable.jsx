@@ -1,18 +1,28 @@
 import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useGetCourses } from '../../hooks/courseHooks';
-
+import { useApproveDeclineCourse, useGetCourses } from '../../hooks/courseHooks';
 
 const ApprovalTable = () => {
-
-    const { data, isLoading } = useGetCourses();
+    const { data, isLoading, refetch } = useGetCourses(); // Destructure refetch from useGetCourses
+    const { mutate: approval, isSuccess } = useApproveDeclineCourse();
     const [courses, setCourses] = useState([]);
+
     useEffect(() => {
         if (data) {
             const pendingCourses = data.filter((course) => course.approval === 'pending');
             setCourses(pendingCourses);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (isSuccess) {
+            refetch();
+        }
+    }, [isSuccess]);
+
+    const handleApproval = async (record, approvalStatus) => {
+        await approval({ courseId: record._id, approval: approvalStatus });
+    };
 
     const columns = [
         {
@@ -24,7 +34,7 @@ const ApprovalTable = () => {
         {
             title: 'Course Name',
             dataIndex: 'name',
-            key: 'courseName',
+            key: 'name',
             width: '30%',
         },
         {
@@ -33,16 +43,17 @@ const ApprovalTable = () => {
             key: 'action',
             render: (record) => (
                 <div>
-                    <Button type="primary" size="small">
+                    <Button onClick={() => handleApproval(record, 'true')} type="primary" size="small">
                         Approve
                     </Button>
-                    <Button size="small" style={{ marginLeft: 8 }}>
+                    <Button onClick={() => handleApproval(record, 'false')} size="small" style={{ marginLeft: 8 }}>
                         Decline
                     </Button>
                 </div>
             ),
         },
     ];
+
     return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
 };
 

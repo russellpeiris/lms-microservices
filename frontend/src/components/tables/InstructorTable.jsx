@@ -14,8 +14,8 @@ const InstructorTable = () => {
         },
         {
             title: 'Course Name',
-            dataIndex: 'courseName',
-            key: 'courseName',
+            dataIndex: 'name',
+            key: 'name',
             width: '30%',
         },
         {
@@ -43,8 +43,7 @@ const InstructorTable = () => {
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         if (data) {
-            const pendingCourses = data.filter((course) => course.approval === 'pending');
-            setCourses(pendingCourses);
+            setCourses(data);
         }
     }, [data]);
 

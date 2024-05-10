@@ -6,7 +6,7 @@ export const useGetCourses = () => {
     return useQuery(
         'courses',
         async () => {
-            const response = await http.get('/course',{
+            const response = await http.get('/course', {
                 withCredentials: 'include',
             });
             return response.data;
@@ -33,5 +33,28 @@ export const useCreateCourse = () => {
                 message.error(error.response.data.message);
             },
         },
-    )
+    );
+};
+
+export const useApproveDeclineCourse = () => {
+    return useMutation(
+        async ({ courseId, approval }) => {
+            const response = await http.patch(
+                `/course/approve/${courseId}`,
+                { approval },
+                {
+                    withCredentials: 'include',
+                },
+            );
+            return response.data;
+        },
+        {
+            onError: (error) => {
+                message.error(error.response.data.message);
+            },
+            onSuccess: () => {
+                message.success('Course approval status updated successfully');
+            },
+        },
+    );
 };
