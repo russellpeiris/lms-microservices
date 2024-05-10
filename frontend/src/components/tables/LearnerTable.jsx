@@ -1,6 +1,19 @@
 import { Button, Table } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGetCourses } from '../../hooks/courseHooks';
 
+
+const LearnerTable = () => {
+    const { data, isLoading } = useGetCourses();
+    const [courses, setCourses] = useState([]);
+
+    useEffect(() => {
+        if (data) {
+            setCourses(data);
+        }
+    }, [data]);
+
+    
 const columns = [
     {
         title: 'Course Code',
@@ -31,20 +44,7 @@ const columns = [
     },
 ];
 
-const dataSource = [
-    {
-        courseCode: 'CSC101',
-        courseName: 'Introduction to Computer Science',
-    },
-    {
-        courseCode: 'MATH202',
-        courseName: 'Calculus II',
-    },
-    // Add more course data objects here
-];
-
-const LearnerTable = () => {
-    return <Table dataSource={dataSource} columns={columns} bordered pagination={false} />;
+    return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
 };
 
 export default LearnerTable;

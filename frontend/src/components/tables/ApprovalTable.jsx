@@ -3,31 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useGetCourses } from '../../hooks/courseHooks';
 
 
-
-const dataSource = [
-    {
-        courseCode: 'CSC101',
-        courseName: 'Introduction to Computer Science',
-    },
-    {
-        courseCode: 'MATH202',
-        courseName: 'Calculus II',
-    },
-    // Add more course data objects here
-];
-
 const ApprovalTable = () => {
 
     const { data, isLoading } = useGetCourses();
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         if (data) {
-            data.filter((course) => {
-                if (course.approval === 'pending') {
-                    setCourses((courses) => [...courses, course]);
-                }
-            });
-            console.log('data :', data);
+            const pendingCourses = data.filter((course) => course.approval === 'pending');
+            setCourses(pendingCourses);
         }
     }, [data]);
 
@@ -60,7 +43,7 @@ const ApprovalTable = () => {
             ),
         },
     ];
-    return <Table dataSource={courses} columns={columns} bordered pagination={false} />;
+    return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
 };
 
 export default ApprovalTable;

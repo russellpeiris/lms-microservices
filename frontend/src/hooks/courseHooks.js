@@ -12,7 +12,7 @@ export const useGetCourses = () => {
             return response.data;
         },
         {
-            refetchOnWindowFocus: false,
+            refetchOnWindowFocus: true,
             onError: (error) => {
                 message.error(error.response.data.message);
             },
