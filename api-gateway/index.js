@@ -1,16 +1,20 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
 import httpProxy from "http-proxy";
 import { authenticate } from "./middlewares/auth.js";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+
 
 config();
 
 const apiGateway = express();
 apiGateway.use(cookieParser());
-apiGateway.use(cors());
-const proxy = httpProxy.createProxyServer();
+apiGateway.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
+const proxy = httpProxy.createProxyServer({});
 
 const colors = {
     reset: "\x1b[0m",
@@ -30,8 +34,12 @@ apiGateway.use('/api/auth', (req, res) => {
     proxy.web(req, res, { target: process.env.AUTH_API });
 });
 
+apiGateway.use('/api/*', authenticate);
+
+// Middleware to add userId to request headers before proxying
 apiGateway.use('/api/*', (req, res, next) => {
-    authenticate(req, res, next);
+    req.headers.userId = req.userId;
+    next();
 });
 
 proxy.on('error', (error, req, res) => {
@@ -44,6 +52,7 @@ apiGateway.listen(process.env.API_GATEWAY_PORT, () => {
 });
 
 apiGateway.use('/api/payment', (req, res) => {
+console.log('req :', req.userId);
     consoleLog(`Request sent to payment server from gateway`, colors.cyan);
     proxy.web(req, res, { target: process.env.PAYMENT_API });
 });

@@ -1,16 +1,11 @@
-import cookieParser from "cookie-parser";
-import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
 import { connectDB } from "../configs/DBConnect.js";
-import { login, register } from "./controllers/auth.controller.js";
-
+import { getUserById, login, register } from "./controllers/auth.controller.js";
 
 config();
 
 export const authService = express();
-authService.use(cookieParser());
-authService.use(cors());
 authService.use(express.json());
 
 const port = process.env.AUTH_PORT;
@@ -31,5 +26,6 @@ authService.post("/test", (req, res) => {
   res.status(200).send("Response from auth server");
 });
 
-authService.post("/login", login)
-authService.post("/register", register)
+authService.post("/login", login);
+authService.post("/register", register);
+authService.get("/user/:userId", getUserById);

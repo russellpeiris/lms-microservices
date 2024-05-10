@@ -7,6 +7,7 @@ import {
   getCourses,
   getCourse,
   approveCourse,
+  getCourseByCourseCode,
   checkClash,
 } from "../controllers/courseController.js";
 
@@ -30,6 +31,9 @@ router.delete("/:id", deleteCourse);
 
 //Approve a course
 router.patch("/approve/:id", approveCourse);
+
+//Approve a course
+router.get("/courseCode/:courseCode", getCourseByCourseCode);
 
 //Check if the lectures clash
 router.post("/clash", checkClash);

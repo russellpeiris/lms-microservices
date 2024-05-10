@@ -35,7 +35,7 @@ async function login(req, res) {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
-    const token = generateToken(res, user._id, user.role);
+    const token = generateToken(res, user._id.toHexString(), user.role);
     res.send({ token, role: user.role });
   } catch (error) {
     console.error(error);
@@ -55,4 +55,21 @@ async function register(req, res) {
   }
 }
 
-export { login, register };
+async function getUserById(req, res) {
+  try {
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user" });
+  }
+}
+
+export { login, register, getUserById };

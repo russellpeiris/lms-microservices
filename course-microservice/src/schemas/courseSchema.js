@@ -43,8 +43,8 @@ const courseSchema = new Schema(
     },
     courseContent: [lectureContentSchema],
     approval: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: 'pending',
     },
   },
   { timestamps: true }
