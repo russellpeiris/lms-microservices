@@ -2,13 +2,12 @@ import Learner from "../schema/learnerSchema.js";
 import axios from "axios";
 
 //Get Course list from the course Microservice
-
-const COURSE_MICRO_SERVICE_BASE_URL = `${process.env.COURSE_API}/api/course`;
+const COURSE_MICRO_SERVICE_BASE_URL = "http://localhost:4003";
 
 const getCourses = async (req, res) => {
   try {
     // Make a GET request to the course microservice to fetch the list of courses
-    const response = await axios.get(`${COURSE_MICRO_SERVICE_BASE_URL}/`);
+    const response = await axios.get(COURSE_MICRO_SERVICE_BASE_URL);
 
     // Extract the courses from the response data
     const courses = response.data.courses;
