@@ -28,7 +28,13 @@ const userSchema = new Schema({
       message: 'Invalid role type.'
     },
     default: 'learner'
-  }
+  },
+  enrolledCourses: [String],
+  payments: [String],
+  courseProgress: [{
+    courseCode: String,
+    progress: Number
+  }]
 })
 
 userSchema.pre('save', async function (next) {
