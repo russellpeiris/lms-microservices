@@ -1,9 +1,11 @@
 import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useGetCourses } from '../../hooks/courseHooks';
+import { useDeleteCourse, useGetCourses } from '../../hooks/courseHooks';
 
 
 const InstructorTable = () => {
+
+    const { mutate: deleteCourse, isSuccess } = useDeleteCourse();
 
     const columns = [
         {
@@ -30,7 +32,7 @@ const InstructorTable = () => {
                     <Button type="primary" size="small" style={{ marginLeft: 8 }}>
                         Edit
                     </Button>
-                    <Button danger type="primary" size="small" style={{ marginLeft: 8 }}>
+                    <Button danger type="primary" size="small" style={{ marginLeft: 8 }} onClick={() => deleteCourse({ courseId: record._id })}>
                         Delete
                     </Button>
                 </div>
@@ -39,13 +41,19 @@ const InstructorTable = () => {
     ];
 
 
-    const { data, isLoading } = useGetCourses();
+    const { data, isLoading, refetch } = useGetCourses();
     const [courses, setCourses] = useState([]);
+
     useEffect(() => {
         if (data) {
             setCourses(data);
         }
     }, [data]);
+    useEffect(() => {
+        if (isSuccess) {
+            refetch();
+        }
+    }, [isSuccess]);
 
     return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
 };
