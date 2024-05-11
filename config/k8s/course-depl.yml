@@ -15,6 +15,8 @@ spec:
       containers:
         - name: course
           image: sithijasanthiya/lms-courses
+          ports:
+            - containerPort: 4003
 ---
 #yaml congfiguration for the ClusterIp service
 apiVersion: v1
