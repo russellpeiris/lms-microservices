@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: sithijasanthiya/lms-frontend
+---
+#yaml congfiguration for the ClusterIp service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+    #don't need to specify the type since ClusterIp is the default kubernetes service.
+  ports:
+    - name: frontend
+      protocol: TCP
+      port: 5173
+      targetPort: 5173
