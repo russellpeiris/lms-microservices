@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payment
-          image: sithijasanthiya/lms-payments
+          image: sithijasanthiya/lms-micro-payment
 ---
 #yaml congfiguration for the ClusterIp service
 apiVersion: v1

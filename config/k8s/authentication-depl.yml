@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: authentication
-          image: sithijasanthiya/lms-authentication
+          image: sithijasanthiya/lms-micro-authentication
 ---
 #yaml congfiguration for the ClusterIp service
 apiVersion: v1

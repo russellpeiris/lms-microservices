@@ -8,7 +8,7 @@ build:
   local:
     push: false #whenever we create a docker file image we need the default rule to not to push it to the docker hub.
   artifacts:
-    - image: sithijasanthiya/lms-authentication
+    - image: sithijasanthiya/lms-micro-authentication
       context: authentication-microservice
       docker:
         dockerfile: Dockerfile
@@ -16,7 +16,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: sithijasanthiya/lms-courses
+    - image: sithijasanthiya/lms-micro-course
       context: course-microservice
       docker:
         dockerfile: Dockerfile
@@ -24,7 +24,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: sithijasanthiya/lms-frontend
+    - image: sithijasanthiya/lms-micro-frontend
       context: frontend
       docker:
         dockerfile: Dockerfile
@@ -32,8 +32,16 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: sithijasanthiya/lms-learners
+    - image: sithijasanthiya/lms-micro-learner
       context: learner-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: sithijasanthiya/lms-micro-gateway
+      context: api-gateway
       docker:
         dockerfile: Dockerfile
       sync:

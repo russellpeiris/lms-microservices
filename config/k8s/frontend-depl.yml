@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: sithijasanthiya/lms-frontend
+          image: sithijasanthiya/lms-micro-frontend
           ports:
             - containerPort: 5173
 ---
