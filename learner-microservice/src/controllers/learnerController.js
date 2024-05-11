@@ -3,6 +3,9 @@ import axios from "axios";
 import sendEmail from "../utils/emailUtils.js";
 import sendSMS from "../utils/smsUtils.js";
 import sendEmail from "../utils/emailUtils.js";
+import sendSMS from "../utils/smsUtils.js";
+import sendEmail from "../utils/emailUtils.js";
+import sendSMS from "../utils/smsUtils.js";
 
 //Get Course list from the course Microservice
 const COURSE_MICRO_SERVICE_BASE_URL = process.env.COURSE_API;
@@ -92,6 +95,13 @@ const learnerEnroltoCourses = async (req, res) => {
       `${COURSE_MICRO_SERVICE_BASE_URL}/courseCode/${courseCode}`
     );
     const enrolledCourse = enrolledCourseResponse.data;
+
+    const recepientNumber = "+94 76 5842442";
+    const messageBody = "Hello there";
+
+    await sendSMS(recepientNumber, messageBody)
+      .then(() => console.log("SMS sent successfully!"))
+      .catch((error) => console.error("Error sending SMS:", error));
 
     return res
       .status(200)
