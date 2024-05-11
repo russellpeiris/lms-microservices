@@ -58,3 +58,22 @@ export const useApproveDeclineCourse = () => {
         },
     );
 };
+
+export const useDeleteCourse = () => {
+    return useMutation(
+        async ({courseId}) => {
+            const response = await http.delete(`/course/${courseId}`, {
+                withCredentials: 'include',
+            });
+            return response.data;
+        },
+        {
+            onError: (error) => {
+                message.error(error.response.data.message);
+            },
+            onSuccess: () => {
+                message.success('Course deleted successfully');
+            },
+        },
+    );
+};
