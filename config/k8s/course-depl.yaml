@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course
+  template:
+    metadata:
+      labels:
+        app: course
+    spec:
+      containers:
+        - name: course
+          image: sithijasanthiya/lms-courses
+---
+#yaml congfiguration for the ClusterIp service
+apiVersion: v1
+kind: Service
+metadata:
+  name: course-service
+spec:
+  selector:
+    app: course
+    #don't need to specify the type since ClusterIp is the default kubernetes service.
+  ports:
+    - name: course
+      protocol: TCP
+      port: 4003
+      targetPort: 4003

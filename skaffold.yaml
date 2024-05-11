@@ -1,0 +1,42 @@
+apiVersion: skaffold/v2beta24
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./config/k8s/*
+build:
+  local:
+    push: false #whenever we create a docker file image we need the default rule to not to push it to the docker hub.
+  artifacts:
+    - image: sithijasanthiya/lms-authentication
+      context: authentication-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: sithijasanthiya/lms-courses
+      context: course-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: sithijasanthiya/lms-frontend
+      context: frontend
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: sithijasanthiya/lms-learners
+      context: learner-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
