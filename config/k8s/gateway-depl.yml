@@ -1,34 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: course-depl
+  name: gateway-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: course
+      app: gateway
   template:
     metadata:
       labels:
-        app: course
+        app: gateway
     spec:
       containers:
-        - name: course
-          image: sithijasanthiya/lms-micro-course
+        - name: gateway
+          image: sithijasanthiya/lms-micro-gateway
           ports:
-            - containerPort: 4003
+            - containerPort: 4000
+
 ---
 #yaml congfiguration for the ClusterIp service
 apiVersion: v1
 kind: Service
 metadata:
-  name: course-service
+  name: gateway-service
 spec:
   selector:
-    app: course
+    app: gateway
     #don't need to specify the type since ClusterIp is the default kubernetes service.
   ports:
-    - name: course
+    - name: gateway
       protocol: TCP
-      port: 4003
-      targetPort: 4003
+      port: 4000
+      targetPort: 4000

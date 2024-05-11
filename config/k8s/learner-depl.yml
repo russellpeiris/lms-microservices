@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: learner
-          image: sithijasanthiya/lms-learners
+          image: sithijasanthiya/lms-micro-learner
 ---
 #yaml congfiguration for the ClusterIp service
 apiVersion: v1
