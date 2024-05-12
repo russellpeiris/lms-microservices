@@ -1,4 +1,5 @@
 import Course from "../schemas/courseSchema.js";
+import Approval from "../../notification/sendMail.js";
 
 //Get course List
 const getCourses = async (req, res) => {
@@ -128,6 +129,8 @@ const approveCourse = async (req, res) => {
       return res.status(404).json({ error: "Course not found" });
     }
 
+    await Approval();
+
     return res.status(200).json({
       message: approval === "true" ? "Course approved" : "Course declined",
       course: updatedCourse,
@@ -159,7 +162,6 @@ const getCourseByCourseCode = async (req, res) => {
 };
 
 //method to get course by course code (to display once enrolled by learner)
-
 
 //Check if Two Courses overlap in time
 const checkClash = async (req, res) => {
