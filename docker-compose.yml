@@ -9,8 +9,8 @@ services:
       - "4000:4000"
     environment:
       - AUTH_API=http://authentication:4001
-      - COURSE_API=http://course:4002
-      - LEARNER_API=http://learner:4003
+      - COURSE_API=http://course:4003
+      - LEARNER_API=http://learner:4002
       - PAYMENT_API=http://payment:4004
     networks:
       - app-network
@@ -21,6 +21,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4001:4001"
+    environment:
+    - AUTH_API=http://authentication:4001
+    - COURSE_API=http://course:4003
+    - LEARNER_API=http://learner:4002
+    - PAYMENT_API=http://payment:4004
     networks:
       - app-network
     
@@ -30,6 +35,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4002:4002"
+    environment:
+      - AUTH_API=http://authentication:4001
+      - COURSE_API=http://course:4003
+      - LEARNER_API=http://learner:4002
+      - PAYMENT_API=http://payment:4004 
     networks:
       - app-network
 
@@ -39,6 +49,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4003:4003"
+    environment:
+        - AUTH_API=http://authentication:4001
+        - COURSE_API=http://course:4003
+        - LEARNER_API=http://learner:4002
+        - PAYMENT_API=http://payment:4004
     networks:
       - app-network
 
@@ -48,6 +63,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4004:4004"
+    environment:
+    - AUTH_API=http://authentication:4001
+    - COURSE_API=http://course:4003
+    - LEARNER_API=http://learner:4002
+    - PAYMENT_API=http://payment:4004
     networks:
       - app-network
   
@@ -57,6 +77,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
+    environment:
+        - AUTH_API=http://authentication:4001
+        - COURSE_API=http://course:4003
+        - LEARNER_API=http://learner:4002
+        - PAYMENT_API=http://payment:4004
     networks:
       - app-network
 

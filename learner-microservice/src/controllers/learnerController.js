@@ -2,9 +2,9 @@ import Learner from "../schema/learnerSchema.js";
 import axios from "axios";
 
 //Get Course list from the course Microservice
-const COURSE_MICRO_SERVICE_BASE_URL = "http://localhost:4003";
+const COURSE_MICRO_SERVICE_BASE_URL = process.env.COURSE_API;
 
-const USER_MICRO_SERVICE_BASE_URL = "http://localhost:4001";
+const USER_MICRO_SERVICE_BASE_URL = process.env.AUTH_API;
 
 const getCourses = async (req, res) => {
   try {

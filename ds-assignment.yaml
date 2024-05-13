@@ -21,9 +21,9 @@ spec:
         - name: AUTH_API
           value: "http://authentication:4001"
         - name: COURSE_API
-          value: "http://course:4002"
+          value: "http://course:4003"
         - name: LEARNER_API
-          value: "http://learner:4003"
+          value: "http://learner:4002"
         - name: PAYMENT_API
           value: "http://payment:4004"
 ---
