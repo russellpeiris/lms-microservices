@@ -20,10 +20,12 @@ const Home = () => {
                     </>
                 );
             case 'instructor':
-                return <>
-                    <CourseModal />
-                    <InstructorTable />
-                </>;
+                return (
+                    <>
+                        <CourseModal />
+                        <InstructorTable />
+                    </>
+                );
             case 'learner':
                 return <LearnerTable />;
             default:

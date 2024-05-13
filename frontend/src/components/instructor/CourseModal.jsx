@@ -3,6 +3,7 @@ import { Button, Form, Input, Modal, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useCreateCourse } from '../../hooks/courseHooks';
 const CourseModal = ( {isEdit} ) => {
+    
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();

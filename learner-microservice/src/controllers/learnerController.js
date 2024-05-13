@@ -13,6 +13,8 @@ const getCourses = async (req, res) => {
     // Make a GET request to the course microservice to fetch the list of courses
     const response = await axios.get(COURSE_MICRO_SERVICE_BASE_URL);
 
+    const users = await axios.get(USER_MICRO_SERVICE_BASE_URL);
+
     // Extract the courses from the response data
     const courses = response.data.courses;
 
