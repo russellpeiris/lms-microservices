@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Admin, Home, Login } from './pages';
+import { Route, Routes, useNavigate, } from 'react-router-dom';
+import { Admin, Home, Login, CheckoutSuccess } from './pages';
 import LeanerProfile from './pages/learner/LearnerProfile';
 
 const Router = () => {
@@ -21,6 +21,7 @@ const Router = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/learner/:courseCode" element={<LeanerProfile />} />
+            <Route path="/checkout-success" element={<CheckoutSuccess />} />
         </Routes>
     );
 };

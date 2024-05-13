@@ -1,6 +1,7 @@
 import Home from './home/Home';
 import Login from './auth/Login';
 import Admin from './admin/Admin';
+import CheckoutSuccess from './home/CheckoutSuccess';
 import Leaner from './learner/Learner';
 
-export { Home, Login, Admin, Leaner };
+export { Home, Login, Admin, Leaner, CheckoutSuccess};

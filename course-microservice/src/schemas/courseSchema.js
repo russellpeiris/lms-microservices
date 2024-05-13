@@ -41,10 +41,14 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
+    price: {
+      type: String,
+      required: true,
+    },
     courseContent: [lectureContentSchema],
     approval: {
       type: String,
-      default: 'pending',
+      default: "pending",
     },
   },
   { timestamps: true }
