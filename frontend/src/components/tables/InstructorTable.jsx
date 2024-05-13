@@ -1,11 +1,27 @@
 import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDeleteCourse, useGetCourses } from '../../hooks/courseHooks';
-
+import CourseModal from '../instructor/CourseModal';
 
 const InstructorTable = () => {
+    const { mutate: deleteCourse, isSuccess: deleted } = useDeleteCourse();
+    const { data: allCourses, isLoading, refetch } = useGetCourses();
+    const [courses, setCourses] = useState([]);
+    const [course, setCourse] = useState({});
+    const [isOpen, setIsOpen] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
 
-    const { mutate: deleteCourse, isSuccess } = useDeleteCourse();
+    const handleModal = (record) => {
+        setCourse(record);
+        setIsOpen(true);
+        setIsEdit(true);
+    };
+
+    const handleCreateCourse = () => {
+        setCourse({});
+        setIsOpen(true);
+        setIsEdit(false);
+    };
 
     const columns = [
         {
@@ -25,37 +41,53 @@ const InstructorTable = () => {
             dataIndex: '',
             key: 'action',
             render: (record) => (
-                <div>
-                    <Button type="primary" size="small">
-                        View
-                    </Button>
-                    <Button type="primary" size="small" style={{ marginLeft: 8 }}>
+                <>
+                    <Button type="primary" onClick={() => handleModal(record)}>
                         Edit
                     </Button>
-                    <Button danger type="primary" size="small" style={{ marginLeft: 8 }} onClick={() => deleteCourse({ courseId: record._id })}>
+                    <Button
+                        danger
+                        type="primary"
+                        style={{ marginLeft: '8px' }}
+                        onClick={() => {
+                            deleteCourse({ courseId: record._id });
+                            refetch();
+                        }}
+                    >
                         Delete
                     </Button>
-                </div>
+                </>
             ),
         },
     ];
 
-
-    const { data, isLoading, refetch } = useGetCourses();
-    const [courses, setCourses] = useState([]);
+    useEffect(() => {
+        setCourses(allCourses);
+    }, [allCourses]);
 
     useEffect(() => {
-        if (data) {
-            setCourses(data);
-        }
-    }, [data]);
-    useEffect(() => {
-        if (isSuccess) {
-            refetch();
-        }
-    }, [isSuccess]);
+        refetch();
+    }, [deleted]);
 
-    return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
+    return (
+        <>
+            <Button type="primary" onClick={handleCreateCourse}>
+                Create Course
+            </Button>
+            <CourseModal
+                isEdit={isEdit}
+                course={course}
+                isOpen={isOpen}
+                onClose={() => {
+                    setIsOpen(false);
+                    setCourse({});
+                    refetch();
+                    setIsEdit(false);
+                }}
+            />
+            <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />
+        </>
+    );
 };
 
 export default InstructorTable;

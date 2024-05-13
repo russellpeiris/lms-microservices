@@ -12,7 +12,7 @@ export const useGetCourses = () => {
             return response.data;
         },
         {
-            refetchOnWindowFocus: true,
+            refetchOnWindowFocus: false,
             onError: (error) => {
                 message.error(error.response.data.message);
             },
@@ -28,7 +28,11 @@ export const useCreateCourse = () => {
             });
             return response.data;
         },
+
         {
+            onSuccess: () => {
+                message.success('Course created successfully');
+            },
             onError: (error) => {
                 message.error(error.response.data.message);
             },
@@ -61,7 +65,7 @@ export const useApproveDeclineCourse = () => {
 
 export const useDeleteCourse = () => {
     return useMutation(
-        async ({courseId}) => {
+        async ({ courseId }) => {
             const response = await http.delete(`/course/${courseId}`, {
                 withCredentials: 'include',
             });
@@ -73,6 +77,26 @@ export const useDeleteCourse = () => {
             },
             onSuccess: () => {
                 message.success('Course deleted successfully');
+            },
+        },
+    );
+};
+
+export const useUpdateCourse = () => {
+    return useMutation(
+        async (course) => {
+            console.log('course :', course);
+            const response = await http.patch(`/course/${course.courseId}`, course.values, {
+                withCredentials: 'include',
+            });
+            return response.data;
+        },
+        {
+            onError: (error) => {
+                message.error(error.response.data.message);
+            },
+            onSuccess: () => {
+                message.success('Course updated successfully');
             },
         },
     );
