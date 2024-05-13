@@ -158,9 +158,6 @@ const getCourseByCourseCode = async (req, res) => {
   }
 };
 
-//method to get course by course code (to display once enrolled by learner)
-
-
 //Check if Two Courses overlap in time
 const checkClash = async (req, res) => {
   try {
