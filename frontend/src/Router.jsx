@@ -1,7 +1,8 @@
 import { message } from 'antd';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Admin, Home, Leaner, Login } from './pages';
 import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Admin, Home, Login } from './pages';
+import LeanerProfile from './pages/learner/LearnerProfile';
 
 const Router = () => {
     const userRole = localStorage.getItem('userRole');
@@ -19,7 +20,7 @@ const Router = () => {
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/learner/:courseCode" element={<Leaner />} />
+            <Route path="/learner/:courseCode" element={<LeanerProfile />} />
         </Routes>
     );
 };

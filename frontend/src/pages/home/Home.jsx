@@ -1,11 +1,8 @@
 import React from 'react';
-import LearnerTable from '../../components/tables/LearnerTable';
-import InstructorTable from '../../components/tables/InstructorTable';
-import PaymentTable from '../../components/tables/PaymentTable';
-import ApprovalTable from '../../components/tables/ApprovalTable';
-import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import CourseModal from '../../components/instructor/CourseModal';
+import Admin from '../admin/Admin';
+import Instructor from '../instructor/Instructor';
+import Learner from '../learner/Learner';
 
 const Home = () => {
     const userRole = localStorage.getItem('userRole');
@@ -13,21 +10,11 @@ const Home = () => {
     const getTable = () => {
         switch (userRole) {
             case 'admin':
-                return (
-                    <>
-                        <ApprovalTable />
-                        <PaymentTable />
-                    </>
-                );
+                return <Admin/>;
             case 'instructor':
-                return (
-                    <>
-                        <CourseModal />
-                        <InstructorTable />
-                    </>
-                );
+                return <Instructor/>;
             case 'learner':
-                return <LearnerTable />;
+                return <Learner/>;
             default:
                 navigate('/');
         }

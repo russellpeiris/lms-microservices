@@ -1,8 +1,10 @@
 import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGetCourses } from '../../hooks/courseHooks';
 
 const LearnerTable = () => {
+    const navigate = useNavigate();
     const { data, isLoading } = useGetCourses();
     const [courses, setCourses] = useState([]);
 
@@ -21,8 +23,8 @@ const LearnerTable = () => {
         },
         {
             title: 'Course Name',
-            dataIndex: 'courseName',
-            key: 'courseName',
+            dataIndex: 'name',
+            key: 'name',
             width: '30%',
         },
         {
@@ -32,7 +34,7 @@ const LearnerTable = () => {
             render: (record) => (
                 <div>
                     <Button type="primary">View</Button>
-                    <Button type="link" style={{ marginLeft: 8 }}>
+                    <Button type="link" style={{ marginLeft: 8 }} onClick={()=> navigate(`/learner/${record._id}`)}>
                         Enroll
                     </Button>
                 </div>
