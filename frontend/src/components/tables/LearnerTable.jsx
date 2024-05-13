@@ -34,7 +34,11 @@ const LearnerTable = () => {
             render: (record) => (
                 <div>
                     <Button type="primary">View</Button>
-                    <Button type="link" style={{ marginLeft: 8 }} onClick={()=> navigate(`/learner/${record._id}`)}>
+                    <Button
+                        type="link"
+                        style={{ marginLeft: 8 }}
+                        onClick={() => navigate(`/learner/${record.courseCode}`)}
+                    >
                         Enroll
                     </Button>
                 </div>
@@ -42,7 +46,7 @@ const LearnerTable = () => {
         },
     ];
 
-    return <Table loading={isLoading} dataSource={courses} columns={columns} bordered pagination={false} />;
+    return <Table loading={isLoading} dataSource={courses && courses} columns={columns} bordered pagination={false} />;
 };
 
 export default LearnerTable;
