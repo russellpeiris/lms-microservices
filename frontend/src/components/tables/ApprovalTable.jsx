@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useApproveDeclineCourse, useGetCourses } from '../../hooks/courseHooks';
 
 const ApprovalTable = () => {
-    const { data, isLoading, refetch } = useGetCourses(); // Destructure refetch from useGetCourses
+    const { data, isLoading, refetch } = useGetCourses();
     const { mutate: approval, isSuccess } = useApproveDeclineCourse();
     const [courses, setCourses] = useState([]);
 
@@ -43,10 +43,10 @@ const ApprovalTable = () => {
             key: 'action',
             render: (record) => (
                 <div>
-                    <Button onClick={() => handleApproval(record, 'true')} type="primary" size="small">
+                    <Button onClick={() => handleApproval(record, 'true')} type="primary">
                         Approve
                     </Button>
-                    <Button onClick={() => handleApproval(record, 'false')} size="small" style={{ marginLeft: 8 }}>
+                    <Button onClick={() => handleApproval(record, 'false')} style={{ marginLeft: 8 }}>
                         Decline
                     </Button>
                 </div>
