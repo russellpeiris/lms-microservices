@@ -72,4 +72,16 @@ async function getUserById(req, res) {
   }
 }
 
-export { login, register, getUserById };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error("Faced an error retrieving users:", error);
+    return res.status(500).json({
+      error: "Failed to retrieve users",
+    });
+  }
+};
+
+export { login, register, getUserById, getAllUsers };
