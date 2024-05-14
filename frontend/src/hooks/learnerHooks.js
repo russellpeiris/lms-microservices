@@ -22,7 +22,26 @@ export const useGetCoursebyCode = (courseCode) => {
     );
 };
 
-export const useAddProgress = (courseCode) => {
+export const useGetCurrentLearner = () => {
+    return useQuery(
+        'learners',
+        async () => {
+            const response = await http.get(`/learner/user`, {
+                withCredentials: 'include',
+            });
+            console.log('hook data', response.data);
+            return response.data.learner;
+        },
+        {
+            refetchOnWindowFocus: true,
+            onError: (error) => {
+                message.error(error.response.data.message);
+            },
+        },
+    );
+};
+
+export const useAddProgress = () => {
     return useMutation(
         async ({ courseCode, course }) => {
             const response = await http.patch(`/learner/progress/${courseCode}`, course, {
@@ -38,9 +57,9 @@ export const useAddProgress = (courseCode) => {
     );
 };
 
-export const LearnerEnroll = (courseCode) => {
+export const LearnerEnroll = () => {
     return useMutation(
-        async ({ courseCode }) => {
+        async ( courseCode ) => {
             const response = await http.patch(`/learner/enrol`, courseCode, {
                 withCredentials: 'include',
             });
@@ -54,7 +73,7 @@ export const LearnerEnroll = (courseCode) => {
     );
 };
 
-export const LearnerUnenroll = (courseCode) => {
+export const LearnerUnenroll = () => {
     return useMutation(
         async ({ courseCode, course }) => {
             const response = await http.patch(`/learner/unenrol/${courseCode}`, course, {

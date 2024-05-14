@@ -85,11 +85,11 @@ const learnerEnroltoCourses = async (req, res) => {
 
     await learner.save();
 
-    // Fetch the enrolled course data
-    const enrolledCourseResponse = await axios.get(
-      `${COURSE_MICRO_SERVICE_BASE_URL}/courseCode/${courseCode}`
-    );
-    const enrolledCourse = enrolledCourseResponse.data;
+    // // Fetch the enrolled course data
+    // const enrolledCourseResponse = await axios.get(
+    //   `${COURSE_MICRO_SERVICE_BASE_URL}/courseCode/${courseCode}`
+    // );
+    // const enrolledCourse = enrolledCourseResponse.data;
 
     //send email if enrolment is success
     const emailContent = `Dear ${learner.userName},\n\n You have succesfully enrolled to the course ${courseCode}. \n\n Please check your updated profile!\n\n -Learner Manager-`;
@@ -97,7 +97,7 @@ const learnerEnroltoCourses = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Successfully Enrolled to Course", enrolledCourse });
+      .json({ message: "Successfully Enrolled to Course", learner });
   } catch (error) {
     console.error("Error enrolling to course");
     return res.status(500).json({ error: "Error enroling to course" });

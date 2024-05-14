@@ -2,12 +2,15 @@
 import { Button, Col, Flex, Progress, Row } from 'antd';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetCoursebyCode } from '../../hooks/learnerHooks';
+import { useGetCoursebyCode, useGetCurrentLearner, LearnerUnenroll } from '../../hooks/learnerHooks';
 import ProgressModal from './Progress';
 
 const LeanerProfile = () => {
     let { courseCode } = useParams();
-    const { data, isLoading, refetch } = useGetCoursebyCode(courseCode);
+    const { data } = useGetCoursebyCode(courseCode);
+    const { learner } = useGetCurrentLearner();
+    const { mutate: unenrol } = LearnerUnenroll(courseCode);
+    console.log('learner: ', learner);
     // console.log(courseCode);
     const [progress, setProgress] = useState(0);
     const updateProgress = (value) => {
@@ -21,14 +24,14 @@ const LeanerProfile = () => {
         name: 'Course with content',
         courseContent: [
             {
-                lectureNumber: 11,
+                lectureNumber: 1,
                 lecturePdfUrl: '1',
                 lectureVideoUrl: '1',
                 lectureQuizUrl: '1',
                 _id: '66422380fa3c7e0811c04b61',
             },
             {
-                lectureNumber: 11,
+                lectureNumber: 2,
                 lecturePdfUrl: '1',
                 lectureVideoUrl: '1',
                 lectureQuizUrl: '1',
@@ -54,6 +57,24 @@ const LeanerProfile = () => {
                             <Col span={12}>
                                 {Names.courseContent.map((course, index) => (
                                     <Row key={index}>
+                                        <div
+                                            style={{
+                                                width: '90%',
+                                                height: '25px',
+                                                // border: '1px solid black',
+                                                borderRadius: '8px',
+                                                margin: '10px',
+                                                marginTop: '20px',
+                                                background:
+                                                    'linear-gradient(45deg, rgb(154 165 176), rgb(114 120 125))',
+                                                padding: '5px',
+                                                boxShadow: '0 0 15px #807f7f4f',
+                                            }}
+                                        >
+                                            <span style={{ colour: 'white', fontWeight: 'bold', padding: '5px' }}>
+                                                Lecture - {course.lectureNumber}
+                                            </span>
+                                        </div>
                                         <a
                                             href={course.lecturePdfUrl}
                                             target="_blank"
@@ -116,16 +137,26 @@ const LeanerProfile = () => {
                                 <div style={{ width: '80%' }}>
                                     <Flex gap="small" vertical>
                                         <h3 style={{ padding: '10px 0', color: 'blue' }}>Current Progress</h3>
+                                        {/* {learner &&
+                                            learner.progress.map((course) => {
+                                                if (course.course === courseCode) {
+                                                    return (
+                                                        <Progress
+                                                            key={course.course}
+                                                            percent={course.overallCompletion}
+                                                        />
+                                                    );
+                                                }
+                                                return null; // This ensures that if the condition is not met, nothing is rendered
+                                            })} */}
                                         <Progress percent={progress} />
-                                        {/* <Button type="primary" style={{ marginTop: '10px' }}>
-                                            Add Progress
-                                        </Button> */}
                                         <ProgressModal courseCode={courseCode} onUpdateProgress={updateProgress} />
                                         <Button
                                             type="dashed"
                                             danger
                                             style={{ marginTop: '10px' }}
                                             onClick={() => {
+                                                unenrol({ courseCode: courseCode });
                                                 navigate('/home');
                                             }}
                                         >
