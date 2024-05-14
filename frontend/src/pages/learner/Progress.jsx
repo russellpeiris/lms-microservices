@@ -28,7 +28,7 @@ const ProgressModal = ({ isEdit, courseCode, onUpdateProgress }) => {
                     { quizNumber: 5, score: Number(values.Score05) },
                 ],
             };
-            addProgress(modifiedValues);
+            // addProgress(modifiedValues);
             const progress = 50;
             onUpdateProgress(progress);
             setOpen(false);
@@ -37,13 +37,14 @@ const ProgressModal = ({ isEdit, courseCode, onUpdateProgress }) => {
         });
     };
 
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         setOpen(false);
-    //         setConfirmLoading(false);
-    //         form.resetFields();
-    //     }
-    // }, [isLoading, isSuccess]);
+    useEffect(() => {
+        if (isSuccess) {
+            setOpen(false);
+            setConfirmLoading(false);
+            form.resetFields();
+        }
+    }, [isLoading, isSuccess]);
+
     const handleCancel = () => {
         console.log('Clicked cancel button');
         setOpen(false);

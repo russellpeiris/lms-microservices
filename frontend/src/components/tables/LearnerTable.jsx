@@ -2,11 +2,13 @@ import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCourses } from '../../hooks/courseHooks';
+import { LearnerEnroll } from '../../hooks/learnerHooks';
 
 const LearnerTable = () => {
     const navigate = useNavigate();
     const { data, isLoading } = useGetCourses();
     const [courses, setCourses] = useState([]);
+    const { mutate: enrol } = LearnerEnroll();
 
     useEffect(() => {
         if (data) {
@@ -37,7 +39,10 @@ const LearnerTable = () => {
                     <Button
                         type="link"
                         style={{ marginLeft: 8 }}
-                        onClick={() => navigate(`/learner/${record.courseCode}`)}
+                        onClick={() => {
+                            enrol({ courseCode: record.courseCode });
+                            navigate(`/learner/${record.courseCode}`);
+                        }}
                     >
                         Enroll
                     </Button>
