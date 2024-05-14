@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { Route, Routes, useNavigate, } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Admin, Home, Login, CheckoutSuccess } from './pages';
 import { useEffect } from 'react';
 

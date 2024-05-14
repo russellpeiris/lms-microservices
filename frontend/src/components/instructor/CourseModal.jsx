@@ -2,8 +2,8 @@ import { DeleteFilled } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useCreateCourse } from '../../hooks/courseHooks';
-const CourseModal = ( {isEdit} ) => {
-    
+const CourseModal = ({ isEdit }) => {
+
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();
@@ -13,7 +13,7 @@ const CourseModal = ( {isEdit} ) => {
     };
 
     const handleOk = () => {
-        form.validateFields().then(values => {
+        form.validateFields().then((values) => {
             createCourse(values);
             console.log('Received values of form:', values);
         });
@@ -25,7 +25,6 @@ const CourseModal = ( {isEdit} ) => {
             setConfirmLoading(false);
             form.resetFields();
         }
-
     }, [isLoading, isSuccess]);
     const handleCancel = () => {
         console.log('Clicked cancel button');
@@ -34,7 +33,9 @@ const CourseModal = ( {isEdit} ) => {
 
     return (
         <>
-            {isEdit ? ('') : (
+            {isEdit ? (
+                ''
+            ) : (
                 <>
                     <Button type="primary" onClick={showModal}>
                         Create Course
@@ -54,11 +55,7 @@ const CourseModal = ( {isEdit} ) => {
                         confirmLoading={confirmLoading}
                         onCancel={handleCancel}
                     >
-                        <Form
-                            form={form}
-                            layout="vertical"
-                            name="course_form"
-                        >
+                        <Form form={form} layout="vertical" name="course_form">
                             <Form.Item
                                 name="courseCode"
                                 label="Course Code"
@@ -77,13 +74,22 @@ const CourseModal = ( {isEdit} ) => {
                                 {(fields, { add, remove }) => (
                                     <>
                                         {fields.map(({ key, name, fieldKey, ...restField }) => (
-                                            <Space key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'self-end' }}>
+                                            <Space
+                                                key={key}
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'self-end',
+                                                }}
+                                            >
                                                 <Form.Item
                                                     {...restField}
                                                     name={[name, 'lectureNumber']}
                                                     fieldKey={[fieldKey, 'lectureNumber']}
                                                     label="Lecture Number"
-                                                    rules={[{ required: true, message: 'Please input the lecture number!' }]}
+                                                    rules={[
+                                                        { required: true, message: 'Please input the lecture number!' },
+                                                    ]}
                                                 >
                                                     <Input placeholder="Enter lecture number" />
                                                 </Form.Item>
@@ -115,7 +121,9 @@ const CourseModal = ( {isEdit} ) => {
                                                     <Input placeholder="Enter quiz URL" />
                                                 </Form.Item>
                                                 <Form.Item>
-                                                    <Button danger onClick={() => remove(name)}><DeleteFilled /></Button>
+                                                    <Button danger onClick={() => remove(name)}>
+                                                        <DeleteFilled />
+                                                    </Button>
                                                 </Form.Item>
                                             </Space>
                                         ))}
@@ -128,7 +136,8 @@ const CourseModal = ( {isEdit} ) => {
                                 )}
                             </Form.List>
                         </Form>
-                    </Modal></>
+                    </Modal>
+                </>
             )}
         </>
     );

@@ -6,6 +6,7 @@ import ApprovalTable from '../../components/tables/ApprovalTable';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import CourseModal from '../../components/instructor/CourseModal';
+import CoursePanel from './CoursePanel';
 
 const Home = () => {
     const userRole = localStorage.getItem('userRole');
@@ -27,7 +28,12 @@ const Home = () => {
                     </>
                 );
             case 'learner':
-                return <LearnerTable />;
+                return (
+                    <>
+                        <LearnerTable />
+                        <CoursePanel />
+                    </>
+                );
             default:
                 navigate('/');
         }

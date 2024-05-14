@@ -2,9 +2,7 @@ import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDeleteCourse, useGetCourses } from '../../hooks/courseHooks';
 
-
 const InstructorTable = () => {
-
     const { mutate: deleteCourse, isSuccess } = useDeleteCourse();
 
     const columns = [
@@ -32,14 +30,19 @@ const InstructorTable = () => {
                     <Button type="primary" size="small" style={{ marginLeft: 8 }}>
                         Edit
                     </Button>
-                    <Button danger type="primary" size="small" style={{ marginLeft: 8 }} onClick={() => deleteCourse({ courseId: record._id })}>
+                    <Button
+                        danger
+                        type="primary"
+                        size="small"
+                        style={{ marginLeft: 8 }}
+                        onClick={() => deleteCourse({ courseId: record._id })}
+                    >
                         Delete
                     </Button>
                 </div>
             ),
         },
     ];
-
 
     const { data, isLoading, refetch } = useGetCourses();
     const [courses, setCourses] = useState([]);
