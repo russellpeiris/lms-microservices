@@ -1,24 +1,14 @@
-import twilio from "twilio";
+import axios from "axios";
 
-const accountSid = "ACe26eb8d80d2fd1decf18bc6107b1f5b5";
-const authToken = "e53e34b42a7579900fc1ad1cda189d10";
-const sender = "+18482666691";
+async function sendSMS(message) {
+  const url = `https://app.notify.lk/api/v1/send?user_id=27148&api_key=7FEWXLvm1PUTs6YUur5S&sender_id=NotifyDEMO&to=94765842442&message=${message}`;
 
-const client = twilio(accountSid, authToken);
-
-const sendSMS = async (recipient, messageBody) => {
   try {
-    const message = await client.messages.create({
-      to: recipient,
-      from: sender,
-      body: messageBody,
-    });
-    console.log("SMS sent successfully with SID:", message.sid);
-    return message;
+    const response = await axios.get(url);
+    return response.data;
   } catch (error) {
-    console.error("Error sending SMS:", error);
-    throw error;
+    throw new Error("Failed to send SMS: " + error.message);
   }
-};
+}
 
 export default sendSMS;
