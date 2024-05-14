@@ -10,6 +10,7 @@ config();
 export const paymentService = express();
 
 paymentService.use(cookieParser());
+
 paymentService.use(
   cors({
     origin: "http://localhost:5173",
@@ -21,7 +22,7 @@ paymentService.use(express.json());
 
 const port = process.env.PAYMENT_PORT;
 
-paymentService.use("/", paymentRouter)
+paymentService.use("/", paymentRouter);
 
 // Start the server after connecting to the database
 connectDB()
@@ -34,7 +35,7 @@ connectDB()
     console.log(error.message);
   });
 
-paymentService.get("/", (req, res) => {
-  console.log(`Received request to payment server from gateway`);
-  res.status(200).send("Response from payment server");
-});
+// paymentService.get("/", (req, res) => {
+//   console.log(`Received request to payment server from gateway`);
+//   res.status(200).send("Response from payment server");
+// });

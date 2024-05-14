@@ -20,6 +20,46 @@ export const useGetCourses = () => {
     );
 };
 
+//get course by id hook
+export const useGetCourseById = (courseId) => {
+    return useQuery(
+        ['courses', courseId],
+        async () => {
+            const response = await http.get(`/course/${courseId}`, {
+                withCredentials: 'include',
+            });
+            return response.data;
+        },
+        {
+            enabled: !!courseId,
+            refetchOnWindowFocus: true,
+            onError: (error) => {
+                message.error(error.response.data.message);
+            },
+        },
+    );
+};
+
+//get course by id hook
+export const useGetCourseById = (courseId) => {
+    return useQuery(
+        ['courses', courseId],
+        async () => {
+            const response = await http.get(`/course/${courseId}`, {
+                withCredentials: 'include',
+            });
+            return response.data;
+        },
+        {
+            enabled: !!courseId,
+            refetchOnWindowFocus: true,
+            onError: (error) => {
+                message.error(error.response.data.message);
+            },
+        },
+    );
+};
+
 export const useCreateCourse = () => {
     return useMutation(
         async (course) => {
@@ -65,6 +105,7 @@ export const useApproveDeclineCourse = () => {
 
 export const useDeleteCourse = () => {
     return useMutation(
+        async ({ courseId }) => {
         async ({ courseId }) => {
             const response = await http.delete(`/course/${courseId}`, {
                 withCredentials: 'include',
