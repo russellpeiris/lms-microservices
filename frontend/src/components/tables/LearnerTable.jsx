@@ -2,12 +2,14 @@ import { Button, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCourses } from '../../hooks/courseHooks';
-import { LearnerEnroll } from '../../hooks/learnerHooks';
+import { LearnerEnroll } from '../../hooks/learnerHooks';import CoursePanel from '../../pages/home/CoursePanel';
 
 const LearnerTable = () => {
     const navigate = useNavigate();
     const { data, isLoading } = useGetCourses();
     const [courses, setCourses] = useState([]);
+    const [courseId, setCourseId] = useState('');
+    const [open, setOpen] = useState(false);
     const { mutate: enrol } = LearnerEnroll();
 
     useEffect(() => {
@@ -15,6 +17,10 @@ const LearnerTable = () => {
             setCourses(data);
         }
     }, [data]);
+
+    const handleCancel = () => {
+        setOpen(false);
+    };
 
     const columns = [
         {
@@ -26,7 +32,7 @@ const LearnerTable = () => {
         {
             title: 'Course Name',
             dataIndex: 'name',
-            key: 'name',
+            key: 'courseName',
             width: '30%',
         },
         {
@@ -35,13 +41,17 @@ const LearnerTable = () => {
             key: 'action',
             render: (record) => (
                 <div>
-                    <Button type="primary">View</Button>
+                    <Button type="primary" size="small">
+                        View
+                    </Button>
                     <Button
                         type="link"
+                        size="small"
                         style={{ marginLeft: 8 }}
                         onClick={() => {
-                            enrol({ courseCode: record.courseCode });
-                            navigate(`/learner/${record.courseCode}`);
+                            console.log(record._id);
+                            setCourseId(record._id);
+                            setOpen(true);
                         }}
                     >
                         Enroll
@@ -51,7 +61,12 @@ const LearnerTable = () => {
         },
     ];
 
-    return <Table loading={isLoading} dataSource={courses && courses} columns={columns} bordered pagination={false} />;
+    return (
+        <div>
+            <Table loading={isLoading} dataSource={courses && courses} columns={columns} bordered pagination={false} />
+            <CoursePanel courseId={courseId} open={open} handleCancel={handleCancel} />
+        </div>
+    );
 };
 
 export default LearnerTable;

@@ -3,5 +3,6 @@ import Login from './auth/Login';
 import Admin from './admin/Admin';
 import Leaner from './learner/Learner';
 import CheckoutSuccess from './home/CheckoutSuccess';
+import CoursePanel from './home/CoursePanel';
 
 export { Home, Login, Admin, Leaner, CheckoutSuccess};

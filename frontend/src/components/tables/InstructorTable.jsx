@@ -45,21 +45,16 @@ const InstructorTable = () => {
                     <Button type="primary" onClick={() => handleModal(record)}>
                         Edit
                     </Button>
-                    <Button
-                        danger
-                        type="primary"
-                        style={{ marginLeft: '8px' }}
-                        onClick={() => {
-                            deleteCourse({ courseId: record._id });
-                            refetch();
-                        }}
-                    >
+                    <Button danger type="primary" size="small" style={{ marginLeft: 8 }} onClick={() => deleteCourse({ courseId: record._id })}>
                         Delete
                     </Button>
                 </>
             ),
         },
     ];
+
+    const { data, isLoading, refetch } = useGetCourses();
+    const [courses, setCourses] = useState([]);
 
     useEffect(() => {
         setCourses(allCourses);

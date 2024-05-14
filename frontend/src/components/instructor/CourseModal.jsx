@@ -38,99 +38,111 @@ export const CourseModal = ({ isEdit, course, onClose, isOpen }) => {
         } else {
             form.resetFields();
         }
-    }, [isOpen]);
+
+    }, [isLoading, isSuccess]);
+    const handleCancel = () => {
+        console.log('Clicked cancel button');
+        setOpen(false);
+    };
 
     return (
         <>
-            <>
-                <Modal
-                    width={800}
-                    title={isEdit ? 'Edit Course' : 'Create Course'}
-                    open={isOpen}
-                    onOk={handleOk}
-                    confirmLoading={isLoading || isEditLoading}
-                    okText={isEdit ? 'Edit' : 'Create'}
-                    onCancel={handleCancel}
-                >
-                    <Form form={form} layout="vertical" name="course_form">
-                        <Form.Item
-                            name="courseCode"
-                            label="Course Code"
-                            rules={[{ required: true, message: 'Please input the course code!' }]}
+            {isEdit ? ('') : (
+                <>
+                    <Button type="primary" onClick={showModal}>
+                        Create Course
+                    </Button>
+                    <Modal
+                        width={800}
+                        title="Create Course"
+                        open={open}
+                        footer={[
+                            <Button key="back" onClick={handleCancel}>
+                                Cancel
+                            </Button>,
+                            <Button key="submit" type="primary" loading={confirmLoading} onClick={handleOk}>
+                                Create
+                            </Button>,
+                        ]}
+                        confirmLoading={confirmLoading}
+                        onCancel={handleCancel}
+                    >
+                        <Form
+                            form={form}
+                            layout="vertical"
+                            name="course_form"
                         >
-                            <Input placeholder="Enter course code" />
-                        </Form.Item>
-                        <Form.Item
-                            name="name"
-                            label="Course Name"
-                            rules={[{ required: true, message: 'Please input the course name!' }]}
-                        >
-                            <Input placeholder="Enter course name" />
-                        </Form.Item>
-                        <Form.List name="courseContent">
-                            {(fields, { add, remove }) => (
-                                <>
-                                    {fields.map(({ key, name, ...restField }) => (
-                                        <Space
-                                            key={key}
-                                            style={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'self-end',
-                                            }}
-                                        >
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'lectureNumber']}
-                                                label="Lecture Number"
-                                                rules={[
-                                                    { required: true, message: 'Please input the lecture number!' },
-                                                ]}
-                                            >
-                                                <Input placeholder="Enter lecture number" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'lecturePdfUrl']}
-                                                label="PDF URL"
-                                                rules={[{ required: true, message: 'Please input the PDF URL!' }]}
-                                            >
-                                                <Input placeholder="Enter PDF URL" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'lectureVideoUrl']}
-                                                label="Video URL"
-                                                rules={[{ required: true, message: 'Please input the video URL!' }]}
-                                            >
-                                                <Input placeholder="Enter video URL" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'lectureQuizUrl']}
-                                                label="Quiz URL"
-                                                rules={[{ required: true, message: 'Please input the quiz URL!' }]}
-                                            >
-                                                <Input placeholder="Enter quiz URL" />
-                                            </Form.Item>
-                                            <Form.Item>
-                                                <Button danger onClick={() => remove(name)}>
-                                                    <DeleteFilled />
-                                                </Button>
-                                            </Form.Item>
-                                        </Space>
-                                    ))}
-                                    <Form.Item>
-                                        <Button type="dashed" onClick={() => add()} block>
-                                            Add Lecture
-                                        </Button>
-                                    </Form.Item>
-                                </>
-                            )}
-                        </Form.List>
-                    </Form>
-                </Modal>
-            </>
+                            <Form.Item
+                                name="courseCode"
+                                label="Course Code"
+                                rules={[{ required: true, message: 'Please input the course code!' }]}
+                            >
+                                <Input placeholder="Enter course code" />
+                            </Form.Item>
+                            <Form.Item
+                                name="name"
+                                label="Course Name"
+                                rules={[{ required: true, message: 'Please input the course name!' }]}
+                            >
+                                <Input placeholder="Enter course name" />
+                            </Form.Item>
+                            <Form.List name="courseContent">
+                                {(fields, { add, remove }) => (
+                                    <>
+                                        {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                            <Space key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'self-end' }}>
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, 'lectureNumber']}
+                                                    fieldKey={[fieldKey, 'lectureNumber']}
+                                                    label="Lecture Number"
+                                                    rules={[{ required: true, message: 'Please input the lecture number!' }]}
+                                                >
+                                                    <Input placeholder="Enter lecture number" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, 'lecturePdfUrl']}
+                                                    fieldKey={[fieldKey, 'lecturePdfUrl']}
+                                                    label="PDF URL"
+                                                    rules={[{ required: true, message: 'Please input the PDF URL!' }]}
+                                                >
+                                                    <Input placeholder="Enter PDF URL" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, 'lectureVideoUrl']}
+                                                    fieldKey={[fieldKey, 'lectureVideoUrl']}
+                                                    label="Video URL"
+                                                    rules={[{ required: true, message: 'Please input the video URL!' }]}
+                                                >
+                                                    <Input placeholder="Enter video URL" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, 'lectureQuizUrl']}
+                                                    fieldKey={[fieldKey, 'lectureQuizUrl']}
+                                                    label="Quiz URL"
+                                                    rules={[{ required: true, message: 'Please input the quiz URL!' }]}
+                                                >
+                                                    <Input placeholder="Enter quiz URL" />
+                                                </Form.Item>
+                                                <Form.Item>
+                                                    <Button danger onClick={() => remove(name)}><DeleteFilled /></Button>
+                                                </Form.Item>
+                                            </Space>
+                                        ))}
+                                        <Form.Item>
+                                            <Button type="dashed" onClick={() => add()} block>
+                                                Add Lecture
+                                            </Button>
+                                        </Form.Item>
+                                    </>
+                                )}
+                            </Form.List>
+                        </Form>
+                    </Modal></>
+            )}
         </>
     );
 };
