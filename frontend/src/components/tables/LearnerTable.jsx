@@ -9,17 +9,14 @@ const LearnerTable = () => {
     const { data, isLoading } = useGetCourses();
     const [courses, setCourses] = useState([]);
     const { mutate: enrol } = LearnerEnroll();
-    const { mutate: viewCourse , isSuccess} = learnerViewCourse();
+    const { mutate: viewCourse, isSuccess } = learnerViewCourse();
 
     const handleViewCourse = (courseCode) => {
-        viewCourse({courseCode: courseCode})
-        console.log("CourseCode: ", courseCode)
+        viewCourse({ courseCode: courseCode });
+        console.log('CourseCode: ', courseCode);
     };
 
-    useEffect(()=> {
-
-    }, [])
-
+    useEffect(() => {}, []);
 
     useEffect(() => {
         if (data) {
@@ -50,6 +47,7 @@ const LearnerTable = () => {
                         type="primary"
                         onClick={() => {
                             handleViewCourse(record.courseCode);
+                            // alert('Please enrol to course to view details');
                         }}
                     >
                         View
@@ -58,7 +56,7 @@ const LearnerTable = () => {
                         type="link"
                         style={{ marginLeft: 8 }}
                         onClick={() => {
-                            // enrol({ courseCode: record.courseCode });
+                            enrol({ courseCode: record.courseCode });
                             navigate(`/learner/${record.courseCode}`);
                         }}
                     >
