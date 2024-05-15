@@ -8,60 +8,77 @@ const COURSE_MICRO_SERVICE_BASE_URL = "http://localhost:4003";
 //User route from the learner Microservice
 const LEARNER_MICRO_SERVICE_BASE_URL = "http://localhost:4002";
 
-export const getCheckoutSession = async (req, res) => {
+export const checkoutPayment = async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  const { paymentData } = req.body;
+
+  console.log(paymentData?.courseCode);
+  console.log(paymentData?.payment);
+
+  const lineItems = [
+    {
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: "CS5050",
+        },
+        unit_amount: 50000,
+      },
+      quantity: 1,
+    },
+  ];
+
   try {
-    //get the currently enrolling learner
-    const learnerId = req.headers.userid;
-
-    //get the currently enrolling learner
-    const learner = await axios.get(`${LEARNER_MICRO_SERVICE_BASE_URL}/user/`);
-
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-    const { product } = req.body;
-
-    //create stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
+      line_items: lineItems,
       mode: "payment",
-      success_url: `http://localhost:5173/checkout-success`,
-      cancel_url: `http://localhost:5173/home`,
-      learner_email: learner.email,
-      learner_reference_id: req.params.courseId,
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            unit_amount: "5000",
-            product_data: {
-              course_code: product.courseCode,
-              courseName: product.name,
-            },
-          },
-          quantity: 1,
-        },
-      ],
+      success_url: "http://localhost:5173/checkout-success",
+      cancel_url: "http://localhost:5173/checkout-failed",
     });
 
-    //create new payment
-    const payment = new Payment({
-      learnerId: learnerId,
-      learnerEmail: learner.email,
-      courseId: product._id,
-      courseCode: product.courseCode,
-      payment: "5000",
-      session: session.id,
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//Create a new payment
+export const createPayment = async (req, res) => {
+  try {
+    const { courseCode, payment } = req.body;
+
+    //const learnerId = req.headers.userid;
+
+    // const learner = await axios.get(`${LEARNER_MICRO_SERVICE_BASE_URL}/user/`);
+
+    // const learnerId = learner._id;
+
+    if (!courseCode || !payment) {
+      return res.status(400).json({
+        error: "Course code and payment are required.",
+      });
+    }
+
+    const newPayment = new Payment({
+      courseCode,
+      payment,
     });
 
-    await payment.save();
+    await newPayment.save();
 
-    res
-      .status(200)
-      .json({ success: true, message: "Payment Successfully paid", session });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Error creating checkout session.",
+    return res.status(201).json({
+      message: "Payment created successfully",
+      payment: newPayment,
+    });
+  } catch (error) {
+    console.error("Error creating course:", error);
+    return res.status(500).json({
+      error: "Failed to create payment.",
     });
   }
 };
+
+//checkout session creation

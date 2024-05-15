@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Admin, Home, Login, CheckoutSuccess } from './pages';
+import { Admin, Home, Login, CheckoutSuccess, CheckoutFailed } from './pages';
 import { useEffect } from 'react';
 
 const Router = () => {
@@ -20,6 +20,7 @@ const Router = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/checkout-success" element={<CheckoutSuccess />} />
+            <Route path="/checkout-failed" element={<CheckoutFailed />} />
         </Routes>
     );
 };

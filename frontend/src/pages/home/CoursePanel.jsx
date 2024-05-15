@@ -3,7 +3,7 @@ import { Button, Modal, message } from 'antd';
 import { useState } from 'react';
 import { useGetCourseById } from '../../hooks/courseHooks';
 import axios from 'axios';
-//import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const CoursePanel = ({ courseId, open, handleCancel }) => {
     const BASE_URL = 'http://localhost:4004';
@@ -14,19 +14,34 @@ const CoursePanel = ({ courseId, open, handleCancel }) => {
 
     console.log(data?.course);
 
-    const paymentHandler = async () => {
-        try {
-            const { data } = await axios.post('http://localhost:4004/create-checkout-session', {
-                courseId: courseId,
-            });
+    const makePayment = async () => {
+        const stripe = await loadStripe(
+            'pk_test_51PFEjXSCEV2mDRlu1lz8AHTSQyQpTtT8mZ0zG5b35g7SwjpPX3qaAh1vlZOVV6A0KJiI8JukSd2mFH2B7pytmiB7007ec0pNEq',
+        );
 
-            if (data.sessionId) {
-                window.location.href = data.checkoutUrl; // Redirect to Stripe Checkout
-            } else {
-                setError('Failed to initiate payment. Please try again.');
-            }
-        } catch (err) {
-            setError('Failed to initiate payment. Please try again.');
+        const body = {
+            productId: 'p1234',
+            payment: 4000,
+        };
+
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+
+        const response = await fetch(`http://localhost:4004/create-checkout-session`, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: headers,
+        });
+
+        const session = await response.json();
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: session.id,
+        });
+
+        if (result.error) {
+            console.log(result.error);
         }
     };
 
@@ -40,7 +55,7 @@ const CoursePanel = ({ courseId, open, handleCancel }) => {
                     <Button key="back" onClick={handleCancel}>
                         Cancel
                     </Button>,
-                    <Button key="submit" type="primary" loading={confirmLoading} onClick={paymentHandler}>
+                    <Button key="submit" type="primary" loading={confirmLoading} onClick={makePayment}>
                         Payment and Enroll
                     </Button>,
                 ]}

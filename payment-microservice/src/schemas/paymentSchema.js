@@ -5,18 +5,18 @@ const Schema = mongoose.Schema;
 //defining the schema for the learner
 const paymentSchema = new Schema(
   {
-    learnerId: {
-      type: String,
-      required: true,
-    },
-    learnerEmail: {
-      type: String,
-      required: true,
-    },
-    courseId: {
-      type: String,
-      required: true,
-    },
+    // learnerId: {
+    //   type: String,
+    //   required: true,
+    // },
+    // learnerEmail: {
+    //   type: String,
+    //   required: true,
+    // },
+    // courseId: {
+    //   type: String,
+    //   required: true,
+    // },
     courseCode: {
       type: String,
       required: true,
