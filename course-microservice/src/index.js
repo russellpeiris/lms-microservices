@@ -11,7 +11,7 @@ export const courseService = express();
 
 courseService.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );

@@ -22,22 +22,36 @@ const LeanerProfile = () => {
         _id: '66422380fa3c7e0811c04b60',
         courseCode: '3',
         name: 'Course with content',
-        courseContent: [
-            {
-                lectureNumber: 1,
-                lecturePdfUrl: '1',
-                lectureVideoUrl: '1',
-                lectureQuizUrl: '1',
-                _id: '66422380fa3c7e0811c04b61',
-            },
-            {
-                lectureNumber: 2,
-                lecturePdfUrl: '1',
-                lectureVideoUrl: '1',
-                lectureQuizUrl: '1',
-                _id: '66422380fa3c7e0811c04b61',
-            },
-        ],
+        "courseContent": [
+			{
+				"lectureNumber": 1,
+				"lecturePdfUrl": "https://www.redbooks.ibm.com/redbooks/pdfs/sg248275.pdf",
+				"lectureVideoUrl": "https://www.youtube.com/watch?v=mgCUmdH5LNk&list=PLTCrU9sGyburHcVKRuw2yXt7V7HEa6ZYY",
+				"lectureQuizUrl": "https://www.javaguides.net/2023/01/microservices-quiz-mcq-multiple-choice.html",
+				"_id": "6643aa9413abd6553499269a"
+			},
+			{
+				"lectureNumber": 2,
+				"lecturePdfUrl": "https://www.redbooks.ibm.com/redbooks/pdfs/sg248275.pdf",
+				"lectureVideoUrl": "https://www.youtube.com/watch?v=mBNDxpJTg8U&list=PLTCrU9sGyburHcVKRuw2yXt7V7HEa6ZYY&index=2",
+				"lectureQuizUrl": "https://www.javaguides.net/2023/01/microservices-quiz-mcq-multiple-choice.html",
+				"_id": "6643aa9413abd6553499269b"
+			},
+			{
+				"lectureNumber": 3,
+				"lecturePdfUrl": "https://www.redbooks.ibm.com/redbooks/pdfs/sg248275.pdf",
+				"lectureVideoUrl": "https://www.youtube.com/watch?v=vGOEO6mO674&list=PLTCrU9sGyburHcVKRuw2yXt7V7HEa6ZYY&index=3",
+				"lectureQuizUrl": "https://www.javaguides.net/2023/01/microservices-quiz-mcq-multiple-choice.html",
+				"_id": "6643aa9413abd6553499269c"
+			},
+			{
+				"lectureNumber": 4,
+				"lecturePdfUrl": "https://www.redbooks.ibm.com/redbooks/pdfs/sg248275.pdf",
+				"lectureVideoUrl": "https://www.youtube.com/watch?v=bQvLj71-0Mk&list=PLTCrU9sGyburHcVKRuw2yXt7V7HEa6ZYY&index=5",
+				"lectureQuizUrl": "https://www.javaguides.net/2023/01/microservices-quiz-mcq-multiple-choice.html",
+				"_id": "6643aa9413abd6553499269d"
+			}
+		],
         approval: 'pending',
         createdAt: '2024-05-13T14:28:16.155Z',
         updatedAt: '2024-05-13T14:28:16.155Z',

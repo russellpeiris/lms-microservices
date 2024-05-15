@@ -58,7 +58,7 @@ const LearnerTable = () => {
                         type="link"
                         style={{ marginLeft: 8 }}
                         onClick={() => {
-                            enrol({ courseCode: record.courseCode });
+                            // enrol({ courseCode: record.courseCode });
                             navigate(`/learner/${record.courseCode}`);
                         }}
                     >
