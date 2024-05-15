@@ -107,6 +107,39 @@ const learnerEnroltoCourses = async (req, res) => {
   }
 };
 
+const learnerViewCourse = async (req, res) => {
+  try {
+    const { courseCode } = req.params;
+    const learnerId = req.headers.userid;
+
+    // Find the learner
+    const learner = await Learner.findOne({ learnerId });
+
+    // Check if the learner exists
+    if (!learner) {
+      return res.status(404).json({ message: "Learner not found" });
+    }
+
+    // Check if the learner is enrolled in the course
+    if (!learner.enrolledCourses.includes(courseCode)) {
+      return res
+        .status(403)
+        .json({
+          message:
+            "You are not enrolled in this course. Please enroll to access it.",
+        });
+    }
+    const courseContent = await await axios.get(
+      `${COURSE_MICRO_SERVICE_BASE_URL}/courseCode/${courseCode}`
+    );
+
+    return res.status(200).json({ courseContent });
+  } catch (error) {
+    console.error("Error viewing course:", error);
+    return res.status(500).json({ error: "Error viewing course" });
+  }
+};
+
 const learnerUnenrolFromCourse = async (req, res) => {
   try {
     const { courseCode } = req.params;
@@ -278,4 +311,5 @@ export {
   learnerUnenrolFromCourse,
   addCourseProgress,
   updateCourseProgress,
+  learnerViewCourse,
 };
