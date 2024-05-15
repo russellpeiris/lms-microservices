@@ -48,7 +48,7 @@ proxy.on('error', (error, req, res) => {
 });
 
 apiGateway.listen(process.env.API_GATEWAY_PORT, () => {
-    console.log(`API Gateway running on http://localhost:${process.env.API_GATEWAY_PORT}`);
+    console.log(`API Gateway running on ${process.env.API_GATEWAY_PORT}`);
 });
 
 apiGateway.use('/api/payment', (req, res) => {

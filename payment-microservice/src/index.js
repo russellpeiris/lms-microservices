@@ -22,7 +22,7 @@ const port = process.env.PAYMENT_PORT;
 connectDB()
   .then(() => {
     paymentService.listen(port, () => {
-      console.log(`Payment server running on http://localhost:${port}`);
+      console.log(`Payment server running on ${process.env.PAYMENT_API}`);
     });
   })
   .catch((error) => {

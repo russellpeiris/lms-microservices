@@ -27,7 +27,7 @@ learnerService.use("/", router);
 connectDB()
   .then(() => {
     learnerService.listen(port, () => {
-      console.log(`Learner server running on http://localhost:${port}`);
+      console.log(`Learner server running on ${process.env.LEARNER_API}`);
     });
   })
   .catch((error) => {

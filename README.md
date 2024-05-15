@@ -9,5 +9,6 @@
     COURSE_PORT = 4003
     PAYMENT_PORT = 4004
 ```
+docker
 ![Architecture](<DS Assignment - Microservices Architecture.jpg>)
 ![Class Diagram](image.png)

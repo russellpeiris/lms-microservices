@@ -59,6 +59,11 @@ spec:
         image: ardpeiris/authentication
         ports:
         - containerPort: 4001
+        env:
+        - name: AUTH_MONGO_URI
+          value: "mongodb+srv://admin:admin@ds-assignment.zcgvt27.mongodb.net/user"
+        - name: JWT_SECRET
+          value: ds-assignment
 ---
 apiVersion: v1
 kind: Service
@@ -91,6 +96,9 @@ spec:
         image: ardpeiris/course
         ports:
         - containerPort: 4002
+        env:
+        - name: COURSE_MONGO_URI
+          value: "mongodb+srv://admin:admin@ds-assignment.zcgvt27.mongodb.net/course"
 ---
 apiVersion: v1
 kind: Service
@@ -123,6 +131,9 @@ spec:
         image: ardpeiris/learner
         ports:
         - containerPort: 4003
+        env:
+        - name: LEARNER_MONGO_URI
+          value: "mongodb+srv://admin:admin@ds-assignment.zcgvt27.mongodb.net/learner"
 ---
 apiVersion: v1
 kind: Service
@@ -155,6 +166,9 @@ spec:
         image: ardpeiris/payment
         ports:
         - containerPort: 4004
+        env:
+        - name: PAYMENT_MONGO_URI
+          value: "mongodb+srv://admin:admin@ds-assignment.zcgvt27.mongodb.net/payment"
 ---
 apiVersion: v1
 kind: Service

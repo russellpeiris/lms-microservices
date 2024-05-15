@@ -14,7 +14,7 @@ const port = process.env.AUTH_PORT;
 connectDB()
   .then(() => {
     authService.listen(port, () => {
-      console.log(`Auth server running on http://localhost:${port}`);
+      console.log(`Auth server running on ${process.env.AUTH_API}`);
     });
   })
   .catch((error) => {

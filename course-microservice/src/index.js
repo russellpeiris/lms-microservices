@@ -26,7 +26,7 @@ courseService.use("/", router);
 connectDB()
   .then(() => {
     courseService.listen(port, () => {
-      console.log(`Course server running on http://localhost:${port}`);
+      console.log(`Course server running on ${process.env.COURSE_API}`);
     });
   })
   .catch((error) => {
