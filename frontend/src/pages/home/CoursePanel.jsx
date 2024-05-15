@@ -12,7 +12,8 @@ const CoursePanel = ({ courseId, open, handleCancel }) => {
     const { data, isLoading } = useGetCourseById(courseId);
     const [error, setError] = useState(null);
 
-    console.log(data?.course);
+    console.log(data?.course._id);
+    console.log(data?.course.courseCode);
 
     const makePayment = async () => {
         const stripe = await loadStripe(
@@ -20,7 +21,9 @@ const CoursePanel = ({ courseId, open, handleCancel }) => {
         );
 
         const body = {
-            productId: 'p1234',
+            courseId: data?.course._id,
+            courseCode: data?.course.courseCode,
+            courseName: data?.course.name,
             payment: 4000,
         };
 

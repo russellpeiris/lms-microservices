@@ -21,8 +21,8 @@ const Router = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/learner/:courseCode" element={<LeanerProfile />} />
-            <Route path="/checkout-success" element={<CheckoutSuccess />} />
-            <Route path="/checkout-failed" element={<CheckoutFailed />} />
+            <Route path="/checkout-success/:id" element={<CheckoutSuccess />} />
+            <Route path="/checkout-failed/:id" element={<CheckoutFailed />} />
         </Routes>
     );
 };

@@ -11,31 +11,38 @@ const LEARNER_MICRO_SERVICE_BASE_URL = "http://localhost:4002";
 export const checkoutPayment = async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-  const { paymentData } = req.body;
-
-  console.log(paymentData?.courseCode);
-  console.log(paymentData?.payment);
+  const { courseId, courseCode, payment, courseName } = req.body;
 
   const lineItems = [
     {
       price_data: {
         currency: "inr",
         product_data: {
-          name: "CS5050",
+          name: `Course code : ${courseCode}`,
+          description: `Course Name : ${courseName}`,
         },
-        unit_amount: 50000,
+
+        unit_amount: payment,
       },
       quantity: 1,
     },
   ];
+
+  const newPayment = new Payment({
+    courseCode,
+    payment,
+    courseId,
+  });
+
+  await newPayment.save();
 
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: "http://localhost:5173/checkout-success",
-      cancel_url: "http://localhost:5173/checkout-failed",
+      success_url: `http://localhost:5173/checkout-success/${courseId}`,
+      cancel_url: `http://localhost:5173/checkout-failed/${courseId}`,
     });
 
     res.json({ id: session.id });

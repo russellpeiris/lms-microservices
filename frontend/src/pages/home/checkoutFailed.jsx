@@ -1,17 +1,41 @@
 import { Link } from 'react-router-dom';
+import FailIcon from '../../assets/icons8-cancel.svg?react';
 
 const CheckoutFailed = () => {
     return (
-        <div className="bg-gray-100 h-screen">
-            <div className="bg-white p-6 md: mx-auto">
-                <div className="text-center">
-                    <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">
+        <div style={{ backgroundColor: '#f7fafc', height: '100vh', width: '100vw', position: 'fixed' }}>
+            <div
+                style={{
+                    backgroundColor: '#ffffff',
+                    padding: '1.5rem',
+                    marginTop: '8%',
+                    marginLeft: '30%',
+                    maxWidth: '600px',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                }}
+            >
+                <div style={{ marginLeft: '35%', marginBottom: '2rem', marginTop: '1rem' }}>
+                    <FailIcon />
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ fontSize: '1.5rem', color: '#1a202c', fontWeight: '600', marginBottom: '1rem' }}>
                         Payment Attempt Failed!
                     </h3>
-                    <p className="text-gray-600 my-2">Try again later.</p>
-                    <p>Have a grate day!</p>
-                    <div className="py-10 text-center">
-                        <Link to={'/home'} className="px-12  bg-blue text-white font-semibold py-3">
+                    <p style={{ color: '#718096', marginBottom: '0.5rem' }}>Try again later.</p>
+                    <p style={{ color: '#718096', marginBottom: '2rem' }}>Have a great day!</p>
+                    <div style={{ paddingTop: '2.5rem', textAlign: 'center' }}>
+                        <Link
+                            to={'/home'}
+                            style={{
+                                padding: '0.75rem 3rem',
+                                backgroundColor: '#3182ce',
+                                color: '#ffffff',
+                                fontWeight: '600',
+                                borderRadius: '4px',
+                                textDecoration: 'none',
+                            }}
+                        >
                             Go Back to Home
                         </Link>
                     </div>

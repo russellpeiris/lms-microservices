@@ -24,7 +24,10 @@ const paymentSchema = new Schema(
     payment: {
       type: String,
       required: true,
-      unique: true,
+    },
+    courseId: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

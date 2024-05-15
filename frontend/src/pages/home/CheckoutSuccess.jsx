@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SuccessIcon from '../../assets/icons8-success.svg';
+import SuccessIcon from '../../assets/icons8-success.svg?react';
 
 const CheckoutSuccess = () => {
     return (
@@ -8,14 +8,16 @@ const CheckoutSuccess = () => {
                 style={{
                     backgroundColor: '#ffffff',
                     padding: '1.5rem',
-                    marginTop: '12%',
+                    marginTop: '8%',
                     marginLeft: '30%',
                     maxWidth: '600px',
                     borderRadius: '8px',
                     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
             >
-                <SuccessIcon />
+                <div style={{ marginLeft: '35%', marginBottom: '2rem', marginTop: '1rem'}}>
+                <SuccessIcon/>
+                </div>
                 <div style={{ textAlign: 'center' }}>
                     <h3 style={{ fontSize: '1.5rem', color: '#1a202c', fontWeight: '600', marginBottom: '1rem' }}>
                         Payment Complete!
