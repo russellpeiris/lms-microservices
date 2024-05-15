@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate, } from 'react-router-dom';
-import { Admin, Home, Login, CheckoutSuccess } from './pages';
+import { Admin, Home, Login, CheckoutSuccess, CheckoutFailed } from './pages';
 import LeanerProfile from './pages/learner/LearnerProfile';
 
 const Router = () => {
@@ -22,6 +22,7 @@ const Router = () => {
             <Route path="/admin" element={<Admin />} />
             <Route path="/learner/:courseCode" element={<LeanerProfile />} />
             <Route path="/checkout-success" element={<CheckoutSuccess />} />
+            <Route path="/checkout-failed" element={<CheckoutFailed />} />
         </Routes>
     );
 };
