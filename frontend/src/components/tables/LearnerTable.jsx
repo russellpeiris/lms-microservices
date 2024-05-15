@@ -1,14 +1,22 @@
-import { Button, Table } from 'antd';
+import { Button, Table, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCourses } from '../../hooks/courseHooks';
-import { LearnerEnroll } from '../../hooks/learnerHooks';
+import { LearnerEnroll, learnerViewCourse } from '../../hooks/learnerHooks';
 
 const LearnerTable = () => {
     const navigate = useNavigate();
     const { data, isLoading } = useGetCourses();
     const [courses, setCourses] = useState([]);
     const { mutate: enrol } = LearnerEnroll();
+    const { mutate: viewCourse, isSuccess } = learnerViewCourse();
+
+    const handleViewCourse = (courseCode) => {
+        viewCourse({ courseCode: courseCode });
+        console.log('CourseCode: ', courseCode);
+    };
+
+    useEffect(() => {}, []);
 
     useEffect(() => {
         if (data) {
@@ -35,7 +43,15 @@ const LearnerTable = () => {
             key: 'action',
             render: (record) => (
                 <div>
-                    <Button type="primary">View</Button>
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            handleViewCourse(record.courseCode);
+                            // alert('Please enrol to course to view details');
+                        }}
+                    >
+                        View
+                    </Button>
                     <Button
                         type="link"
                         style={{ marginLeft: 8 }}

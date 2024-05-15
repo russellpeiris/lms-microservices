@@ -59,7 +59,7 @@ export const useAddProgress = () => {
 
 export const LearnerEnroll = () => {
     return useMutation(
-        async ( courseCode ) => {
+        async (courseCode) => {
             const response = await http.patch(`/learner/enrol`, courseCode, {
                 withCredentials: 'include',
             });
@@ -67,6 +67,27 @@ export const LearnerEnroll = () => {
         },
         {
             onError: (error) => {
+                message.error(error.response.data.message);
+            },
+        },
+    );
+};
+
+export const learnerViewCourse = () => {
+    return useMutation(
+        'learners', // Set courseCode as part of the query key
+        async ({courseCode}) => {
+            console.log('Async course code: ', courseCode);
+            const response = await http.get(`/learner/course/${courseCode}`, {
+                withCredentials: 'include',
+            });
+            console.log('hook data', response.data);
+            return response.data.learner;
+        },
+        {
+            refetchOnWindowFocus: true,
+            onError: (error) => {
+                console.log("Error: ", error)
                 message.error(error.response.data.message);
             },
         },

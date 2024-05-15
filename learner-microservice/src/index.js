@@ -12,7 +12,7 @@ export const learnerService = express();
 learnerService.use(cookieParser());
 learnerService.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
