@@ -8,10 +8,12 @@ services:
     ports:
       - "4000:4000"
     environment:
+      - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
-      - COURSE_API=http://course:4003
       - LEARNER_API=http://learner:4002
+      - COURSE_API=http://course:4003 
       - PAYMENT_API=http://payment:4004
+      - JWT_SECRET='secret'
     networks:
       - app-network
 
@@ -22,10 +24,12 @@ services:
     ports:
       - "4001:4001"
     environment:
-    - AUTH_API=http://authentication:4001
-    - COURSE_API=http://course:4003
-    - LEARNER_API=http://learner:4002
-    - PAYMENT_API=http://payment:4004
+      - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
+      - AUTH_API=http://authentication:4001
+      - LEARNER_API=http://learner:4002
+      - COURSE_API=http://course:4003 
+      - PAYMENT_API=http://payment:4004
+      - JWT_SECRET='secret'
     networks:
       - app-network
     
@@ -34,12 +38,14 @@ services:
       context: ./course-microservice
       dockerfile: Dockerfile
     ports:
-      - "4002:4002"
+      - "4003:4003"
     environment:
+      - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
-      - COURSE_API=http://course:4003
       - LEARNER_API=http://learner:4002
-      - PAYMENT_API=http://payment:4004 
+      - COURSE_API=http://course:4003 
+      - PAYMENT_API=http://payment:4004
+      - JWT_SECRET='secret'
     networks:
       - app-network
 
@@ -48,12 +54,14 @@ services:
       context: ./learner-microservice
       dockerfile: Dockerfile
     ports:
-      - "4003:4003"
+      - "4002:4002"
     environment:
-        - AUTH_API=http://authentication:4001
-        - COURSE_API=http://course:4003
-        - LEARNER_API=http://learner:4002
-        - PAYMENT_API=http://payment:4004
+      - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
+      - AUTH_API=http://authentication:4001
+      - LEARNER_API=http://learner:4002
+      - COURSE_API=http://course:4003 
+      - PAYMENT_API=http://payment:4004
+      - JWT_SECRET='secret'
     networks:
       - app-network
 
@@ -64,10 +72,12 @@ services:
     ports:
       - "4004:4004"
     environment:
-    - AUTH_API=http://authentication:4001
-    - COURSE_API=http://course:4003
-    - LEARNER_API=http://learner:4002
-    - PAYMENT_API=http://payment:4004
+      - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
+      - AUTH_API=http://authentication:4001
+      - LEARNER_API=http://learner:4002
+      - COURSE_API=http://course:4003 
+      - PAYMENT_API=http://payment:4004
+      - JWT_SECRET='secret'
     networks:
       - app-network
   
@@ -78,10 +88,12 @@ services:
     ports:
       - "5173:5173"
     environment:
-        - AUTH_API=http://authentication:4001
-        - COURSE_API=http://course:4003
-        - LEARNER_API=http://learner:4002
-        - PAYMENT_API=http://payment:4004
+      - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
+      - AUTH_API=http://authentication:4001
+      - LEARNER_API=http://learner:4002
+      - COURSE_API=http://course:4003 
+      - PAYMENT_API=http://payment:4004
+      - JWT_SECRET='secret'
     networks:
       - app-network
 

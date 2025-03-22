@@ -19,6 +19,7 @@
         "@tanstack/react-query": "^5.35.1",
         "antd": "^5.16.2",
         "axios": "^1.6.8",
+        "ds-assignment-frontend": "file:",
         "js-cookie": "^3.0.5",
         "lint-staged": "^15.2.2",
         "react": "^18.2.0",

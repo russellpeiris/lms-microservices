@@ -1,9 +1,7 @@
 {
   "name": "auth-microservice",
-  "name": "auth-microservice",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -15,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "auth-microservice": "file:",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
