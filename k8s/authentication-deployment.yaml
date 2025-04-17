@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication
+  template:
+    metadata:
+      labels:
+        app: authentication
+    spec:
+      containers:
+        - name: authentication
+          image: ardpeiris/authentication:latest
+          ports:
+            - containerPort: 4001
+          env:
+            - name: MONGO_URI
+              value: mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
+            - name: AUTH_API
+              value: http://authentication:4001
+            - name: LEARNER_API
+              value: http://learner:4002
+            - name: COURSE_API
+              value: http://course:4003
+            - name: PAYMENT_API
+              value: http://payment:4004
+            - name: JWT_SECRET
+              value: secret

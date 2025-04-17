@@ -2,11 +2,15 @@ import { config } from "dotenv";
 import express from "express";
 import { connectDB } from "../configs/DBConnect.js";
 import { getUserById, login, register } from "./controllers/auth.controller.js";
+import cors from "cors";
 
 config();
 
 export const authService = express();
 authService.use(express.json());
+authService.use(cors({
+  origin: "*",
+}))
 
 const port = process.env.AUTH_PORT;
 

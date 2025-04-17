@@ -5,6 +5,7 @@ services:
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
+    image: ardpeiris/gateway:latest
     ports:
       - "4000:4000"
     environment:
@@ -21,6 +22,7 @@ services:
     build:
       context: ./authentication-microservice
       dockerfile: Dockerfile
+    image: ardpeiris/authentication:latest
     ports:
       - "4001:4001"
     environment:
@@ -37,6 +39,7 @@ services:
     build:
       context: ./course-microservice
       dockerfile: Dockerfile
+    image: ardpeiris/course:latest
     ports:
       - "4003:4003"
     environment:
@@ -53,6 +56,7 @@ services:
     build:
       context: ./learner-microservice
       dockerfile: Dockerfile
+    image: ardpeiris/learner:latest
     ports:
       - "4002:4002"
     environment:
@@ -69,6 +73,7 @@ services:
     build:
       context: ./payment-microservice
       dockerfile: Dockerfile
+    image: ardpeiris/payment:latest
     ports:
       - "4004:4004"
     environment:
@@ -85,6 +90,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    image: ardpeiris/frontend:latest
     ports:
       - "5173:5173"
     environment:
@@ -93,6 +99,7 @@ services:
       - LEARNER_API=http://learner:4002
       - COURSE_API=http://course:4003 
       - PAYMENT_API=http://payment:4004
+      - VITE_GATEWAY_API=http://gateway:4000
       - JWT_SECRET='secret'
     networks:
       - app-network

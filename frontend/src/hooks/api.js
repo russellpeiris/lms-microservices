@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { getBearToken, getStoredAuthToken } from '../utils/auth.utils';
 
 const http = axios.create({
-    baseURL: 'http://localhost:4000/api',
+    // baseURL: `${import.meta.env.VITE_GATEWAY_API}/api` ,
+    baseURL: `http://10.102.62.63:4000/api`,
 });
+
+console.log('baseURL :', `${import.meta.env.VITE_GATEWAY_API}/api`);
 // // In here, we handle the api error
 // http.interceptors.response.use(undefined, (error) =>
 //   Promise.reject({
@@ -18,3 +20,4 @@ const http = axios.create({
 // });
 
 export { http };
+
