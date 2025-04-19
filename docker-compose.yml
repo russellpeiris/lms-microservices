@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
+    image: ardpeiris/ctse-gateway:latest
     environment:
       - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
@@ -23,6 +24,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4001:4001"
+    image: ardpeiris/ctse-authentication:latest
     environment:
       - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
@@ -39,6 +41,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4003:4003"
+    image: ardpeiris/ctse-course:latest
     environment:
       - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
@@ -55,6 +58,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4002:4002"
+    image: ardpeiris/ctse-learner:latest
     environment:
       - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
@@ -71,6 +75,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4004:4004"
+    image: ardpeiris/ctse-payment:latest
     environment:
       - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
@@ -87,12 +92,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
+    image: ardpeiris/ctse-frontend:latest
     environment:
       - MONGO_URI=mongodb+srv://admin:admin@ctse.jek3a.mongodb.net/?retryWrites=true&w=majority&appName=ctse
       - AUTH_API=http://authentication:4001
       - LEARNER_API=http://learner:4002
       - COURSE_API=http://course:4003 
       - PAYMENT_API=http://payment:4004
+      - VITE_GATEWAY_API=http://gateway:4000
       - JWT_SECRET='secret'
     networks:
       - app-network

@@ -11,7 +11,7 @@ config();
 const apiGateway = express();
 apiGateway.use(cookieParser());
 apiGateway.use(cors({
-    origin: 'http://localhost:5173',
+    origin: '*',
     credentials: true,
 }));
 const proxy = httpProxy.createProxyServer({});
