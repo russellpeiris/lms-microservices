@@ -11,7 +11,7 @@ config();
 const apiGateway = express();
 apiGateway.use(cookieParser());
 apiGateway.use(cors({
-    origin: 'http://10.101.177.79:5173',
+    origin: '*',
     credentials: true,
 }));
 const proxy = httpProxy.createProxyServer({});
